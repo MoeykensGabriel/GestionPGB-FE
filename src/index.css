@@ -339,9 +339,10 @@ body {
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 @media (min-width: 768px) {
-  .ds-modal-backdrop { align-items: center; }
+  .ds-modal-backdrop { align-items: center; padding-bottom: 0; }
 }
 
 .ds-modal {
