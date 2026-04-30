@@ -3,6 +3,14 @@ import * as XLSX from 'xlsx'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { importProducts } from '../api/products'
 import { ModalBackdrop } from './ModalBackdrop'
+
+function IconTableFile({ style }) {
+  return (
+    <svg style={style} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h1.5C5.496 19.5 6 18.996 6 18.375m-3.75.125V5.625m0 12.75v-1.5m3.75 1.5V5.625m0 12.75h10.125M6 18.375V5.625M6 5.625A1.125 1.125 0 0 1 7.125 4.5h9.75A1.125 1.125 0 0 1 18 5.625m0 0v12.75m0 0h1.5m-1.5 0c0 .621-.504 1.125-1.125 1.125M18 5.625v1.5M6 7.125h12M6 10.5h12M6 13.875h12" />
+    </svg>
+  )
+}
 import { IconX } from './Icons'
 import { QK } from '../utils/queryKeys'
 
@@ -64,7 +72,7 @@ const CSS = `
     cursor: pointer; transition: border-color 0.15s, background 0.15s;
   }
   .imp-drop:hover, .imp-drop.drag { border-color: #facc15; background: rgba(250,204,21,0.04); }
-  .imp-drop-icon { font-size: 30px; margin-bottom: 12px; }
+  .imp-drop-icon { width: 36px; height: 36px; margin: 0 auto 12px; color: #4d5a72; }
   .imp-drop-title { font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
   .imp-drop-sub   { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #4d5a72; margin-top: 6px; }
 
@@ -230,7 +238,7 @@ export function ImportProductsModal({ onClose }) {
                 onDragLeave={() => setIsDrag(false)}
                 onDrop={(e) => { e.preventDefault(); setIsDrag(false); parseFile(e.dataTransfer.files[0]) }}
               >
-                <p className="imp-drop-icon">📊</p>
+                <IconTableFile style={{ width: 36, height: 36, margin: '0 auto 12px', color: '#4d5a72', display: 'block' }} />
                 <p className="imp-drop-title">Arrastrá o hacé click para subir</p>
                 <p className="imp-drop-sub">.xlsx · .xls · .csv</p>
               </div>
