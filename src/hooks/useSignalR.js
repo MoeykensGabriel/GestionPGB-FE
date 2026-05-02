@@ -24,8 +24,12 @@ export function useSignalR(handlers = {}) {
     const connection = new signalR.HubConnectionBuilder()
       .withUrl(HUB_URL, {
         accessTokenFactory: () => localStorage.getItem('token') ?? '',
+        // Intenta WebSockets primero; si el proxy los bloquea, cae a Long Polling.
+        // Server-Sent Events se omite: Railway lo cierra antes de los 60s.
+        transport: signalR.HttpTransportType.WebSockets | signalR.HttpTransportType.LongPolling,
       })
-      .withAutomaticReconnect()
+      // Reintentos: inmediato, 2s, 5s, 10s, 30s
+      .withAutomaticReconnect([0, 2000, 5000, 10000, 30000])
       .configureLogging(signalR.LogLevel.Warning)
       .build()
 
