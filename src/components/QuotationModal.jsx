@@ -7,7 +7,7 @@ import { QK } from '../utils/queryKeys'
 const CSS = `
   .qm-list { display: flex; flex-direction: column; gap: 6px; max-height: 260px; overflow-y: auto; }
   .qm-item {
-    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
     padding: 8px 12px;
     background: var(--bg-secondary);
     border: 2px solid var(--border);
@@ -16,6 +16,8 @@ const CSS = `
   .qm-item-info { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
   .qm-item-name { font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .qm-item-meta { font-size: 10px; color: var(--text-tertiary); font-weight: 600; letter-spacing: 0.05em; }
+  .qm-item-qty { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+  .qm-item-qty-input { width: 50px; height: 32px; padding: 0 6px; background: var(--bg-primary); border: 2px solid var(--border); color: var(--text-primary); font-weight: 700; text-align: center; font-size: 12px; }
   .qm-remove { background: none; border: none; cursor: pointer; color: var(--text-secondary); font-size: 16px; line-height: 1; padding: 2px 4px; flex-shrink: 0; }
   .qm-remove:hover { color: var(--error-light); }
   .qm-search { display: flex; flex-direction: column; gap: 6px; }
@@ -36,7 +38,8 @@ const CSS = `
 
 export function QuotationModal({ onClose }) {
   const [search, setSearch] = useState('')
-  const [selected, setSelected] = useState(null) // null = loading
+  const [selected, setSelected] = useState(null) // null = loading, [] = empty, [product, ...] = loaded
+  const [quantities, setQuantities] = useState({}) // { productId: quantity }
   const [isGenerating, setIsGenerating] = useState(false)
   const [error, setError] = useState(null)
 
@@ -47,7 +50,15 @@ export function QuotationModal({ onClose }) {
   })
 
   useEffect(() => {
-    if (selected === null && lowStockData) setSelected(lowStockData)
+    if (selected === null && lowStockData) {
+      setSelected(lowStockData)
+      // Pre-calcula cantidades automáticas
+      const qty = {}
+      lowStockData.forEach(p => {
+        qty[p.id] = Math.max(1, p.minRequiredStock - p.currentStock)
+      })
+      setQuantities(qty)
+    }
   }, [lowStockData])
 
   // Búsqueda de productos para agregar manualmente
@@ -64,10 +75,27 @@ export function QuotationModal({ onClose }) {
     [searchData, selectedIds]
   )
 
-  const remove = (id) => setSelected(prev => prev.filter(p => p.id !== id))
+  const remove = (id) => {
+    setSelected(prev => prev.filter(p => p.id !== id))
+    setQuantities(prev => {
+      const next = { ...prev }
+      delete next[id]
+      return next
+    })
+  }
+
   const add = (product) => {
     setSelected(prev => [...(prev ?? []), product])
+    setQuantities(prev => ({
+      ...prev,
+      [product.id]: Math.max(1, product.minRequiredStock - product.currentStock)
+    }))
     setSearch('')
+  }
+
+  const updateQuantity = (id, qty) => {
+    const num = Math.max(1, parseInt(qty) || 1)
+    setQuantities(prev => ({ ...prev, [id]: num }))
   }
 
   const handleGenerate = async () => {
@@ -75,7 +103,11 @@ export function QuotationModal({ onClose }) {
     setIsGenerating(true)
     setError(null)
     try {
-      const res = await generateQuotationPdf(selected.map(p => p.id))
+      const items = selected.map(p => ({
+        productId: p.id,
+        quantity: quantities[p.id] ?? 1
+      }))
+      const res = await generateQuotationPdf(items)
       const url = URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }))
       const a = document.createElement('a')
       a.href = url
@@ -122,7 +154,16 @@ export function QuotationModal({ onClose }) {
                       <span className="qm-item-name">{p.itemName}</span>
                       <span className="qm-item-meta">{p.providerName} · Stock: {p.currentStock} / Min: {p.minRequiredStock}</span>
                     </div>
-                    <button className="qm-remove" onClick={() => remove(p.id)} title="Quitar">×</button>
+                    <div className="qm-item-qty">
+                      <input
+                        type="number"
+                        className="qm-item-qty-input"
+                        min="1"
+                        value={quantities[p.id] ?? 1}
+                        onChange={(e) => updateQuantity(p.id, e.target.value)}
+                      />
+                      <button className="qm-remove" onClick={() => remove(p.id)} title="Quitar">×</button>
+                    </div>
                   </div>
                 ))}
               </div>
