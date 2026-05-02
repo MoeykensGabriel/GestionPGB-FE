@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getLowStockProducts, getProducts, generateQuotationPdf } from '../api/products'
 import { ModalBackdrop } from './ModalBackdrop'
@@ -41,13 +41,14 @@ export function QuotationModal({ onClose }) {
   const [error, setError] = useState(null)
 
   // Carga bajo stock y pre-selecciona
-  const { isLoading } = useQuery({
+  const { isLoading, data: lowStockData } = useQuery({
     queryKey: QK.lowStock,
     queryFn: () => getLowStockProducts().then(r => r.data),
-    onSuccess: (data) => {
-      if (selected === null) setSelected(data ?? [])
-    },
   })
+
+  useEffect(() => {
+    if (selected === null && lowStockData) setSelected(lowStockData)
+  }, [lowStockData])
 
   // Búsqueda de productos para agregar manualmente
   const { data: searchData } = useQuery({
