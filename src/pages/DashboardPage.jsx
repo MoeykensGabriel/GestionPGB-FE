@@ -1,6 +1,7 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useQueryClient, useQuery } from '@tanstack/react-query'
-import { getProducts, getLowStockProducts, getQuotationPdf } from '../api/products'
+import { getProducts, getLowStockProducts } from '../api/products'
+import { QuotationModal } from '../components/QuotationModal'
 import { getMovements } from '../api/movements'
 import { useSignalR } from '../hooks/useSignalR'
 import { useTheme } from '../hooks/useTheme'
@@ -62,15 +63,7 @@ export default function DashboardPage() {
     queryFn: () => getMovements({ pageSize: 8 }).then(r => r.data.items),
   })
 
-  const handleDownloadPdf = async () => {
-    const { data } = await getQuotationPdf()
-    const url = URL.createObjectURL(data)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `cotizacion_${new Date().toISOString().slice(0, 10)}.pdf`
-    a.click()
-    URL.revokeObjectURL(url)
-  }
+  const [showQuotation, setShowQuotation] = useState(false)
 
   const stats = [
     { label: 'Productos', value: totalProducts, accent: '#facc15' },
@@ -95,14 +88,12 @@ export default function DashboardPage() {
             >
               {theme === 'dark' ? 'claro' : 'oscuro'}
             </button>
-            {lowStockItems.length > 0 && (
-              <button onClick={handleDownloadPdf} className="ds-btn">
-                <svg style={{ width: 13, height: 13 }} fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                </svg>
-                PDF Cotización
-              </button>
-            )}
+            <button onClick={() => setShowQuotation(true)} className="ds-btn">
+              <svg style={{ width: 13, height: 13 }} fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+              </svg>
+              PDF Cotización
+            </button>
           </div>
         </div>
 
@@ -230,6 +221,8 @@ export default function DashboardPage() {
         </div>
 
       </div>
+
+      {showQuotation && <QuotationModal onClose={() => setShowQuotation(false)} />}
     </>
   )
 }
