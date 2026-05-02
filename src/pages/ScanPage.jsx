@@ -220,12 +220,9 @@ export default function ScanPage() {
   const addToLog = (data) =>
     setSessionLog(prev => [{ ...data, ts: Date.now() }, ...prev].slice(0, 30))
 
+  // onStockUpdated no es necesario aquí: el Layout global ya invalida las queries.
   const { isConnected, sendSetMode } = useSignalR({
     onModeChanged: (newMode) => { setMode(newMode); setError('') },
-    onStockUpdated: () => {
-      queryClient.invalidateQueries({ queryKey: QK.products })
-      queryClient.invalidateQueries({ queryKey: QK.movements })
-    },
   })
 
   const handleModeChange = (newMode) => { setMode(newMode); setError(''); sendSetMode(newMode) }
@@ -329,7 +326,6 @@ export default function ScanPage() {
                   <input
                     ref={inputRef}
                     type="text"
-                    inputMode="numeric"
                     value={barcode}
                     onChange={(e) => setBarcode(e.target.value)}
                     placeholder="Esperando lector..."

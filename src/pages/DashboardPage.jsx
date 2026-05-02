@@ -1,9 +1,8 @@
 import { useMemo, useState } from 'react'
-import { useQueryClient, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { getProducts, getLowStockProducts } from '../api/products'
 import { QuotationModal } from '../components/QuotationModal'
 import { getMovements } from '../api/movements'
-import { useSignalR } from '../hooks/useSignalR'
 import { useTheme } from '../hooks/useTheme'
 import { stockStatus, STOCK_STATUS } from '../utils/stockStatus'
 import { movementBadge, formatQty } from '../utils/movements'
@@ -26,7 +25,6 @@ const CSS = `
 const DP_MOVEMENTS_KEY = [...QK.movements, { pageSize: 8 }]
 
 export default function DashboardPage() {
-  const queryClient = useQueryClient()
   const { theme, toggleTheme } = useTheme()
 
   const todayStart = useMemo(() => {
@@ -35,13 +33,7 @@ export default function DashboardPage() {
     return d.toISOString()
   }, [])
 
-  useSignalR({
-    onStockUpdated: () => {
-      queryClient.invalidateQueries({ queryKey: QK.products })
-      queryClient.invalidateQueries({ queryKey: QK.movements })
-      queryClient.invalidateQueries({ queryKey: ['low-stock'] })
-    },
-  })
+  // La conexión global en Layout ya invalida las queries al recibir StockUpdated.
 
   const { data: totalProducts = 0 } = useQuery({
     queryKey: [...QK.products, { pageSize: 1 }],

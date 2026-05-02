@@ -48,6 +48,7 @@ export default function ProductsPage() {
   const [showImport, setShowImport] = useState(false)
   const [editingId, setEditingId]         = useState(null)
   const [form, setForm]                   = useState(emptyForm)
+  const [formError, setFormError]         = useState('')
   const [search, setSearch]               = useState('')
   const [page, setPage]                   = useState(1)
   const [confirmDeleteId, setConfirmDeleteId] = useState(null)
@@ -79,7 +80,7 @@ export default function ProductsPage() {
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: QK.products }); setConfirmDeleteId(null) },
   })
 
-  const closeForm = () => { setShowForm(false); setEditingId(null); setForm(emptyForm) }
+  const closeForm = () => { setShowForm(false); setEditingId(null); setForm(emptyForm); setFormError('') }
 
   const handleEdit = (p) => {
     setEditingId(p.id)
@@ -96,21 +97,40 @@ export default function ProductsPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setFormError('')
+
+    const stock = Number(form.currentStock)
+    const minStock = Number(form.minRequiredStock)
+
+    if (!editingId && !form.barcode.trim())
+      return setFormError('El código de barras es obligatorio.')
+    if (!form.itemName.trim())
+      return setFormError('El nombre del producto es obligatorio.')
+    if (!form.providerName.trim())
+      return setFormError('El proveedor es obligatorio.')
+    if (!editingId && stock < 0)
+      return setFormError('El stock inicial no puede ser negativo.')
+    if (minStock < 0)
+      return setFormError('El stock mínimo no puede ser negativo.')
+
     if (editingId) {
       updateMutation.mutate({
         id: editingId,
         data: {
-          itemName: form.itemName,
-          description: form.description,
-          minRequiredStock: Number(form.minRequiredStock),
-          providerName: form.providerName,
+          itemName: form.itemName.trim(),
+          description: form.description.trim(),
+          minRequiredStock: minStock,
+          providerName: form.providerName.trim(),
         },
       })
     } else {
       createMutation.mutate({
-        ...form,
-        currentStock: Number(form.currentStock),
-        minRequiredStock: Number(form.minRequiredStock),
+        barcode: form.barcode.trim(),
+        itemName: form.itemName.trim(),
+        description: form.description.trim(),
+        providerName: form.providerName.trim(),
+        currentStock: stock,
+        minRequiredStock: minStock,
       })
     }
   }
@@ -301,12 +321,14 @@ export default function ProductsPage() {
 
               <div className="ds-grid-2">
                 {!editingId && (
-                  <FormField label="Stock inicial" type="number" value={form.currentStock}
+                  <FormField label="Stock inicial" type="number" min={0} value={form.currentStock}
                     onChange={v => setForm({ ...form, currentStock: v })} required />
                 )}
-                <FormField label="Stock mínimo" type="number" value={form.minRequiredStock}
+                <FormField label="Stock mínimo" type="number" min={0} value={form.minRequiredStock}
                   onChange={v => setForm({ ...form, minRequiredStock: v })} required />
               </div>
+
+              {formError && <p className="ds-msg-error">{formError}</p>}
 
               <div style={{ display: 'flex', gap: 10, paddingTop: 4 }}>
                 <button type="button" onClick={closeForm} className="ds-btn-ghost" style={{ flex: 1, height: 48 }}>

@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../context/AuthContext'
+import { useSignalR } from '../hooks/useSignalR'
+import { QK } from '../utils/queryKeys'
 import {
   IconHome, IconBox, IconArrows, IconScan,
   IconUsers, IconLogout, IconShield, IconX,
@@ -279,8 +282,19 @@ const adminPanelItems = [
 export default function Layout({ children }) {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const [adminPanelOpen, setAdminPanelOpen] = useState(false)
   const isAdmin = user?.role === 'Admin'
+
+  // Conexión global: invalida todos los datos afectados cuando hay un movimiento de stock,
+  // sin importar en qué página esté el usuario.
+  useSignalR({
+    onStockUpdated: () => {
+      queryClient.invalidateQueries({ queryKey: QK.products })
+      queryClient.invalidateQueries({ queryKey: QK.movements })
+      queryClient.invalidateQueries({ queryKey: QK.lowStock })
+    },
+  })
 
   const handleLogout = () => { logout(); navigate('/login') }
   const handleAdminNav = (to) => { setAdminPanelOpen(false); navigate(to) }
