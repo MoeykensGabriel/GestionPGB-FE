@@ -355,6 +355,7 @@ body {
   max-height: 92dvh;
   overflow-y: auto;
   z-index: 50;
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
 }
 
 .ds-modal-hd {
