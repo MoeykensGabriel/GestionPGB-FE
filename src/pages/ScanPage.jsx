@@ -256,6 +256,36 @@ export default function ScanPage() {
     },
   })
 
+  // Corrige caracteres mal traducidos cuando el layout del scanner (US) difiere del SO.
+  // event.code = tecla física (siempre US); event.key = lo que el SO produjo.
+  // Si difieren para caracteres especiales de códigos de barras, insertamos el correcto.
+  const LAYOUT_FIX = {
+    Slash:        ['/', '?'],
+    Minus:        ['-', '_'],
+    Equal:        ['=', '+'],
+    BracketLeft:  ['[', '{'],
+    BracketRight: [']', '}'],
+    Backslash:    ['\\', '|'],
+    Semicolon:    [';', ':'],
+    Quote:        ["'", '"'],
+    Backquote:    ['`', '~'],
+    Comma:        [',', '<'],
+    Period:       ['.', '>'],
+  }
+
+  const handleBarcodeKeyDown = (e) => {
+    const map = LAYOUT_FIX[e.code]
+    if (!map || e.ctrlKey || e.metaKey || e.altKey) return
+    const expected = e.shiftKey ? map[1] : map[0]
+    if (e.key === expected) return           // traducción correcta, no intervenir
+    e.preventDefault()
+    const input = e.target
+    const start = input.selectionStart ?? input.value.length
+    const end   = input.selectionEnd   ?? input.value.length
+    setBarcode(input.value.slice(0, start) + expected + input.value.slice(end))
+    requestAnimationFrame(() => input.setSelectionRange(start + 1, start + 1))
+  }
+
   const handleScan = (e) => {
     e.preventDefault()
     const raw = inputRef.current?.value ?? barcode
@@ -337,6 +367,7 @@ export default function ScanPage() {
                     type="text"
                     value={barcode}
                     onChange={(e) => setBarcode(e.target.value)}
+                    onKeyDown={handleBarcodeKeyDown}
                     placeholder="Esperando lector..."
                     className="sp-bc-input"
                     autoComplete="off"
