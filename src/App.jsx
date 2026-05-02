@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AuthProvider } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
+import { SignalRProvider } from './context/SignalRContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import Layout from './components/Layout'
 import LoginPage from './pages/LoginPage'
@@ -25,6 +26,7 @@ export default function App() {
               path="/*"
               element={
                 <ProtectedRoute>
+                  <SignalRProvider>
                   <Layout>
                     <Routes>
                       {/* Admin y Operator */}
@@ -44,6 +46,7 @@ export default function App() {
                       <Route path="*" element={<Navigate to="/scan" replace />} />
                     </Routes>
                   </Layout>
+                  </SignalRProvider>
                 </ProtectedRoute>
               }
             />

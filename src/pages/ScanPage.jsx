@@ -217,12 +217,21 @@ export default function ScanPage() {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
 
+  // Evita duplicar el mismo movimiento si este dispositivo ya lo agregó vía mutation
   const addToLog = (data) =>
-    setSessionLog(prev => [{ ...data, ts: Date.now() }, ...prev].slice(0, 30))
+    setSessionLog(prev => {
+      if (prev.length > 0 && prev[0].id === data.id) return prev
+      return [{ ...data, ts: Date.now() }, ...prev].slice(0, 30)
+    })
 
-  // onStockUpdated no es necesario aquí: el Layout global ya invalida las queries.
   const { isConnected, sendSetMode } = useSignalR({
     onModeChanged: (newMode) => { setMode(newMode); setError('') },
+    // Muestra el resultado en todos los dispositivos conectados, no solo el que escaneó
+    onStockUpdated: (data) => {
+      setLastResult(data)
+      setResultKey(k => k + 1)
+      addToLog(data)
+    },
   })
 
   const handleModeChange = (newMode) => { setMode(newMode); setError(''); sendSetMode(newMode) }
