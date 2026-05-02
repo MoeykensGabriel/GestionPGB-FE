@@ -64,7 +64,7 @@ const CSS = `
   .sp-result.entrada .sp-result-type { color: #4ae176; }
   .sp-result.salida  .sp-result-type { color: #ff6b6b; }
   .sp-result-name {
-    font-size: 15px; font-weight: 800; color: #fff;
+    font-size: 15px; font-weight: 800; color: var(--text-primary);
     margin-bottom: 14px; letter-spacing: -0.01em; line-height: 1.2;
   }
   .sp-result-grid {
@@ -82,7 +82,7 @@ const CSS = `
   }
   .sp-result-cell-val {
     font-size: 32px; font-weight: 900; letter-spacing: -0.03em;
-    line-height: 1; font-variant-numeric: tabular-nums; color: #fff;
+    line-height: 1; font-variant-numeric: tabular-nums; color: var(--text-primary);
   }
   @media (min-width: 768px) {
     .sp-result-cell-val { font-size: 44px; }
@@ -131,32 +131,32 @@ const CSS = `
 
   /* ── Session log ── */
   .sp-log {
-    width: 255px; flex-shrink: 0; background: #09090b;
-    border: 4px solid #000; box-shadow: 4px 4px 0 0 rgba(0,0,0,1);
+    width: 255px; flex-shrink: 0; background: var(--bg-primary);
+    border: 4px solid var(--border); box-shadow: 4px 4px 0 0 var(--border);
     display: flex; flex-direction: column;
   }
   .sp-log-hd {
-    padding: 10px 14px; border-bottom: 4px solid #000; background: #0c1322;
+    padding: 10px 14px; border-bottom: 4px solid var(--border); background: var(--bg-secondary);
     display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
   }
-  .sp-log-title { font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #facc15; }
-  .sp-log-count { font-size: 9px; font-weight: 700; color: #4d5a72; }
+  .sp-log-title { font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+  .sp-log-count { font-size: 9px; font-weight: 700; color: var(--text-secondary); }
   .sp-log-body { flex: 1; overflow-y: auto; min-height: 0; }
   .sp-log-row {
-    padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding: 10px 14px; border-bottom: 1px solid var(--overlay);
     display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
   }
   .sp-log-row:last-child { border-bottom: none; }
-  .sp-log-name { font-size: 12px; font-weight: 700; color: #dce2f7; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sp-log-name { font-size: 12px; font-weight: 700; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .sp-log-sub { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
   .sp-log-qty { font-size: 15px; font-weight: 900; font-variant-numeric: tabular-nums; flex-shrink: 0; }
-  .sp-log-ft { padding: 8px 14px; border-top: 4px solid #000; flex-shrink: 0; }
+  .sp-log-ft { padding: 8px 14px; border-top: 4px solid var(--border); flex-shrink: 0; }
   .sp-log-clear {
     background: none; border: none; cursor: pointer;
     font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-    color: #2e3545; transition: color 0.15s; padding: 0; font-family: 'Inter', system-ui, sans-serif;
+    color: var(--text-secondary); transition: color 0.15s; padding: 0; font-family: 'Inter', system-ui, sans-serif;
   }
-  .sp-log-clear:hover { color: #9a9078; }
+  .sp-log-clear:hover { color: var(--text-tertiary); }
 
   /* ── Layout ── */
   .sp-cols { display: flex; gap: 14px; flex-direction: column; }
@@ -165,17 +165,17 @@ const CSS = `
 
   /* ── Empty placeholder ── */
   .sp-placeholder {
-    border: 4px dashed rgba(255,255,255,0.07);
+    border: 4px dashed var(--overlay-hover);
     padding: 32px 20px; text-align: center;
     font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
-    text-transform: uppercase; color: #1e2a3a;
+    text-transform: uppercase; color: var(--text-secondary);
   }
 
   /* ── Mobile log ── */
-  .sp-mob-log { background: #09090b; border: 4px solid #000; box-shadow: 4px 4px 0 0 rgba(0,0,0,1); }
+  .sp-mob-log { background: var(--bg-primary); border: 4px solid var(--border); box-shadow: 4px 4px 0 0 var(--border); }
   .sp-mob-log-hd {
-    padding: 10px 14px; border-bottom: 4px solid #000; background: #0c1322;
-    font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #facc15;
+    padding: 10px 14px; border-bottom: 4px solid var(--border); background: var(--bg-secondary);
+    font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent);
   }
   .sp-mob-row {
     display: flex; align-items: center; justify-content: space-between;
@@ -375,7 +375,7 @@ export default function ScanPage() {
             {sessionLog.slice(0, 5).map((entry, i) => (
               <div key={i} className="sp-mob-row">
                 <div style={{ minWidth: 0 }}>
-                  <p style={{ fontSize: 13, fontWeight: 700, color: '#dce2f7', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {entry.productName}
                   </p>
                   <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: entry.type === 'ENTRADA' ? '#4ae176' : '#ff6b6b', marginTop: 2 }}>
@@ -386,7 +386,7 @@ export default function ScanPage() {
                   <p style={{ fontSize: 17, fontWeight: 900, color: entry.type === 'ENTRADA' ? '#4ae176' : '#ff6b6b', fontVariantNumeric: 'tabular-nums' }}>
                     {entry.quantity > 0 ? `+${entry.quantity}` : entry.quantity}
                   </p>
-                  <p style={{ fontSize: 11, color: '#4d5a72', fontWeight: 700 }}>stk {entry.currentStock}</p>
+                  <p style={{ fontSize: 11, color: 'var(--text-secondary)', fontWeight: 700 }}>stk {entry.currentStock}</p>
                 </div>
               </div>
             ))}

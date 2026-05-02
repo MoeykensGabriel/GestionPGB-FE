@@ -10,17 +10,17 @@ import { QK } from '../utils/queryKeys'
 
 const CSS = `
   .up-card {
-    background: #09090b;
-    border: 4px solid #000;
-    box-shadow: 3px 3px 0 0 rgba(0,0,0,1);
+    background: var(--bg-primary);
+    border: 4px solid var(--border);
+    box-shadow: 3px 3px 0 0 var(--border);
     padding: 14px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
   }
-  .up-card-name { font-size: 14px; font-weight: 800; color: #fff; letter-spacing: -0.01em; }
-  .up-card-full { font-size: 11px; color: #9a9078; font-weight: 600; margin-top: 2px; }
+  .up-card-name { font-size: 14px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.01em; }
+  .up-card-full { font-size: 11px; color: var(--text-tertiary); font-weight: 600; margin-top: 2px; }
   .up-card-you {
     font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
     color: #facc15; background: rgba(250,204,21,0.1); border: 2px solid rgba(250,204,21,0.3);
@@ -118,15 +118,15 @@ export default function UsersPage() {
                     return (
                       <tr key={u.id}>
                         <td>
-                          <p style={{ fontWeight: 700, color: '#fff' }}>{u.userName}</p>
+                          <p style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{u.userName}</p>
                           {isMe && (
                             <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#facc15' }}>
                               Tú
                             </span>
                           )}
                         </td>
-                        <td style={{ color: '#dce2f7' }}>{u.fullName}</td>
-                        <td style={{ fontSize: 12, color: '#9a9078' }}>{u.email}</td>
+                        <td style={{ color: 'var(--text-primary)' }}>{u.fullName}</td>
+                        <td style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>{u.email}</td>
                         <td>
                           <span className={`ds-badge ${u.role === 'Admin' ? 'ds-badge-admin' : 'ds-badge-operator'}`}>
                             {u.role === 'Admin' ? 'Admin' : 'Operario'}

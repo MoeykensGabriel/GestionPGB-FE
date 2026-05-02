@@ -18,8 +18,8 @@ const CSS = `
     gap: 12px;
   }
   .dp-inv-card:last-child { border-bottom: none; }
-  .dp-inv-name { font-size: 13px; font-weight: 700; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .dp-inv-prov { font-size: 11px; color: #9a9078; margin-top: 2px; }
+  .dp-inv-name { font-size: 13px; font-weight: 700; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .dp-inv-prov { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
 `
 
 const DP_MOVEMENTS_KEY = [...QK.movements, { pageSize: 8 }]
@@ -130,15 +130,15 @@ export default function DashboardPage() {
                       <tr key={p.id}>
                         <td><span className={`ds-dot ${cfg.dot}`} /></td>
                         <td>
-                          <p style={{ fontWeight: 700, color: '#fff' }}>{p.itemName}</p>
+                          <p style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{p.itemName}</p>
                           {p.description && <p className="ds-mono" style={{ marginTop: 2 }}>{p.description}</p>}
                         </td>
-                        <td><span style={{ fontSize: 12, color: '#9a9078' }}>{p.providerName}</span></td>
+                        <td><span style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>{p.providerName}</span></td>
                         <td className="right">
                           <span className="tabular" style={{ fontSize: 17, fontWeight: 900, color: cfg.color }}>{p.currentStock}</span>
                         </td>
                         <td className="right">
-                          <span className="tabular" style={{ fontSize: 13, color: '#4d5a72', fontWeight: 700 }}>{p.minRequiredStock}</span>
+                          <span className="tabular" style={{ fontSize: 13, color: 'var(--text-secondary)', fontWeight: 700 }}>{p.minRequiredStock}</span>
                         </td>
                         <td className="center">
                           <span className={`ds-badge ${cfg.badge}`}>{cfg.label}</span>
@@ -164,7 +164,7 @@ export default function DashboardPage() {
                       </div>
                       <div style={{ textAlign: 'right', flexShrink: 0 }}>
                         <p className="tabular" style={{ fontSize: 20, fontWeight: 900, color: cfg.color, lineHeight: 1 }}>{p.currentStock}</p>
-                        <p style={{ fontSize: 10, color: '#4d5a72', fontWeight: 700, marginTop: 2 }}>mín {p.minRequiredStock}</p>
+                        <p style={{ fontSize: 10, color: 'var(--text-secondary)', fontWeight: 700, marginTop: 2 }}>mín {p.minRequiredStock}</p>
                       </div>
                     </div>
                   )
@@ -196,10 +196,10 @@ export default function DashboardPage() {
                   }}
                 >
                   <div style={{ minWidth: 0, flex: 1 }}>
-                    <p style={{ fontSize: 13, fontWeight: 700, color: '#dce2f7', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {m.productName}
                     </p>
-                    <p style={{ fontSize: 11, color: '#4d5a72', marginTop: 2 }}>
+                    <p style={{ fontSize: 11, color: 'var(--text-secondary)', marginTop: 2 }}>
                       {m.createdBy} · {new Date(m.createdAt).toLocaleString('es-AR')}
                     </p>
                   </div>

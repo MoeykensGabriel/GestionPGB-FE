@@ -23,14 +23,14 @@ const CSS = `
     gap: 10px;
   }
   .pp-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-  .pp-card-name { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: -0.01em; }
-  .pp-card-barcode { font-family: 'Courier New', monospace; font-size: 13px; color: #dce2f7; margin-top: 3px; font-weight: 600; }
+  .pp-card-name { font-size: 15px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.01em; }
+  .pp-card-barcode { font-family: 'Courier New', monospace; font-size: 13px; color: var(--text-primary); margin-top: 3px; font-weight: 600; }
   .pp-card-bottom { display: flex; align-items: flex-end; justify-content: space-between; }
-  .pp-card-prov { font-size: 11px; color: #9a9078; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+  .pp-card-prov { font-size: 11px; color: var(--text-tertiary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
   .pp-card-stock { font-size: 26px; font-weight: 900; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1; }
-  .pp-card-stock-sub { font-size: 10px; color: #4d5a72; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .pp-card-stock-sub { font-size: 10px; color: var(--text-secondary); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
   .pp-card-actions { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
-  .pp-hint { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: #4d5a72; padding: 8px 0 0; text-transform: uppercase; }
+  .pp-hint { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: var(--text-secondary); padding: 8px 0 0; text-transform: uppercase; }
 `
 
 const emptyForm = {
@@ -212,15 +212,15 @@ export default function ProductsPage() {
                         <td><span className={`ds-dot ${cfg.dot}`} /></td>
                         <td><span className="ds-mono" style={{ fontSize: 14, color: '#dce2f7', fontWeight: 600 }}>{p.barcode}</span></td>
                         <td>
-                          <p style={{ fontWeight: 700, color: '#fff', fontSize: 15 }}>{p.itemName}</p>
+                          <p style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: 15 }}>{p.itemName}</p>
                           {p.description && <p className="ds-mono" style={{ marginTop: 2 }}>{p.description}</p>}
                         </td>
-                        <td><span style={{ fontSize: 12, color: '#9a9078' }}>{p.providerName}</span></td>
+                        <td><span style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>{p.providerName}</span></td>
                         <td className="right">
                           <span className="tabular" style={{ fontSize: 18, fontWeight: 900, color: cfg.color }}>{p.currentStock}</span>
                         </td>
                         <td className="right">
-                          <span className="tabular" style={{ fontSize: 13, color: '#4d5a72', fontWeight: 700 }}>{p.minRequiredStock}</span>
+                          <span className="tabular" style={{ fontSize: 13, color: 'var(--text-secondary)', fontWeight: 700 }}>{p.minRequiredStock}</span>
                         </td>
                         <td className="center">
                           <span className={`ds-badge ${cfg.badge}`}>{cfg.label}</span>
