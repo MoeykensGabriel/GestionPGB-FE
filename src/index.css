@@ -14,8 +14,8 @@
   --accent: #facc15;
   --accent-dark: #d4a500;
   --success: #4ae176;
-  --error: #93000a;
-  --error-light: #ff6b6b;
+  --error: #7f1d1d;
+  --error-light: #fca5a5;
   --overlay: rgba(255,255,255,0.04);
   --overlay-hover: rgba(255,255,255,0.06);
 }
@@ -30,7 +30,7 @@
   --accent: #d4a500;
   --accent-dark: #b8860b;
   --success: #059669;
-  --error: #dc2626;
+  --error: #991b1b;
   --error-light: #fca5a5;
   --overlay: rgba(0,0,0,0.04);
   --overlay-hover: rgba(0,0,0,0.08);
