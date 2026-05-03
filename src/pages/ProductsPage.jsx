@@ -14,9 +14,9 @@ import { useDebounce } from '../hooks/useDebounce'
 
 const CSS = `
   .pp-card {
-    background: #09090b;
-    border: 4px solid #000;
-    box-shadow: 3px 3px 0 0 rgba(0,0,0,1);
+    background: var(--bg-primary);
+    border: 4px solid var(--border);
+    box-shadow: 3px 3px 0 0 var(--border);
     padding: 14px 16px;
     display: flex;
     flex-direction: column;
@@ -210,17 +210,17 @@ export default function ProductsPage() {
                     return (
                       <tr key={p.id}>
                         <td><span className={`ds-dot ${cfg.dot}`} /></td>
-                        <td><span className="ds-mono" style={{ fontSize: 14, color: '#dce2f7', fontWeight: 600 }}>{p.barcode}</span></td>
+                        <td><span className="ds-mono" style={{ fontSize: 14, fontWeight: 600 }}>{p.barcode}</span></td>
                         <td>
-                          <p style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: 15 }}>{p.itemName}</p>
+                          <p style={{ fontWeight: 700, fontSize: 15 }}>{p.itemName}</p>
                           {p.description && <p className="ds-mono" style={{ marginTop: 2 }}>{p.description}</p>}
                         </td>
-                        <td><span style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>{p.providerName}</span></td>
+                        <td><span style={{ fontSize: 12 }}>{p.providerName}</span></td>
                         <td className="right">
                           <span className="tabular" style={{ fontSize: 18, fontWeight: 900, color: cfg.color }}>{p.currentStock}</span>
                         </td>
                         <td className="right">
-                          <span className="tabular" style={{ fontSize: 13, color: 'var(--text-secondary)', fontWeight: 700 }}>{p.minRequiredStock}</span>
+                          <span className="tabular" style={{ fontSize: 13, fontWeight: 700 }}>{p.minRequiredStock}</span>
                         </td>
                         <td className="center">
                           <span className={`ds-badge ${cfg.badge}`}>{cfg.label}</span>

@@ -8,9 +8,9 @@ import { QK } from '../utils/queryKeys'
 
 const CSS = `
   .mp-card {
-    background: #09090b;
-    border: 4px solid #000;
-    box-shadow: 3px 3px 0 0 rgba(0,0,0,1);
+    background: var(--bg-primary);
+    border: 4px solid var(--border);
+    box-shadow: 3px 3px 0 0 var(--border);
     padding: 14px 16px;
   }
   .mp-card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }

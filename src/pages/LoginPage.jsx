@@ -14,8 +14,8 @@ const CSS = `
     display: flex;
     flex-direction: column;
     font-family: 'Inter', system-ui, sans-serif;
-    background-color: #0c1322;
-    color: #dce2f7;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     overflow-x: hidden;
     box-sizing: border-box;
   }
@@ -24,10 +24,10 @@ const CSS = `
 
   /* ── TopBar ── */
   .lp-topbar {
-    background: #09090b;
-    color: #facc15;
-    border-bottom: 4px solid #000;
-    box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+    background: var(--bg-primary);
+    color: var(--accent);
+    border-bottom: 4px solid var(--border);
+    box-shadow: 4px 4px 0px 0px var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,12 +43,12 @@ const CSS = `
     font-style: italic;
     letter-spacing: -0.03em;
     text-transform: uppercase;
-    color: #facc15;
+    color: var(--accent);
     margin: 0;
   }
 
   .lp-brand span {
-    color: #ffffff;
+    color: var(--text-primary);
   }
 
   /* ── Main container ── */
@@ -71,15 +71,15 @@ const CSS = `
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #facc15;
+    color: var(--accent);
     margin-bottom: 4px;
   }
 
   .lp-system-dot {
     width: 8px;
     height: 8px;
-    background: #4ae176;
-    border: 2px solid #000;
+    background: var(--success);
+    border: 2px solid var(--border);
     animation: lp-blink 1.5s step-end infinite;
   }
 
@@ -92,17 +92,17 @@ const CSS = `
   .lp-card {
     width: 100%;
     max-width: 440px;
-    border: 4px solid #000;
-    box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
-    background: #09090b;
+    border: 4px solid var(--border);
+    box-shadow: 6px 6px 0px 0px var(--border);
+    background: var(--bg-primary);
     display: flex;
     flex-direction: column;
   }
 
   /* ── Card header ── */
   .lp-card-header {
-    background: #0c1322;
-    border-bottom: 4px solid #000;
+    background: var(--bg-secondary);
+    border-bottom: 4px solid var(--border);
     padding: 24px 28px 20px;
     display: flex;
     flex-direction: column;
@@ -114,13 +114,13 @@ const CSS = `
     font-weight: 900;
     letter-spacing: -0.03em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: var(--text-primary);
     margin: 0;
     line-height: 1;
   }
 
   .lp-card-title span {
-    color: #facc15;
+    color: var(--accent);
   }
 
   .lp-card-sub {
@@ -128,7 +128,7 @@ const CSS = `
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #9a9078;
+    color: var(--text-tertiary);
     margin: 0;
   }
 
@@ -155,7 +155,7 @@ const CSS = `
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #facc15;
+    color: var(--accent);
   }
 
   .lp-input-wrap {
@@ -170,7 +170,7 @@ const CSS = `
     display: flex;
     align-items: center;
     pointer-events: none;
-    color: #9a9078;
+    color: var(--text-tertiary);
   }
 
   .lp-input {
@@ -180,24 +180,23 @@ const CSS = `
     font-family: 'Inter', system-ui, sans-serif;
     font-size: 15px;
     font-weight: 700;
-    color: #facc15;
-    background: #0c1322;
-    border: 4px solid #000;
-    /* inset-well */
-    box-shadow: inset 4px 4px 0px 0px rgba(0,0,0,1);
+    color: var(--accent);
+    background: var(--bg-secondary);
+    border: 4px solid var(--border);
+    box-shadow: inset 4px 4px 0px 0px var(--border);
     outline: none;
     border-radius: 0;
     -webkit-appearance: none;
     transition: border-color 0.15s;
-    caret-color: #facc15;
+    caret-color: var(--accent);
   }
 
   .lp-input::placeholder {
-    color: #2e3545;
+    color: var(--text-tertiary);
   }
 
   .lp-input:focus {
-    border-color: #facc15;
+    border-color: var(--accent);
   }
 
   .lp-input-pr {
@@ -213,25 +212,25 @@ const CSS = `
     padding: 4px;
     display: flex;
     align-items: center;
-    color: #9a9078;
+    color: var(--text-tertiary);
     transition: color 0.15s;
   }
 
   .lp-eye-btn:hover {
-    color: #facc15;
+    color: var(--accent);
   }
 
   /* ── Error ── */
   .lp-error {
-    background: #93000a;
-    border: 4px solid #000;
-    box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+    background: var(--error);
+    border: 4px solid var(--border);
+    box-shadow: 4px 4px 0px 0px var(--border);
     padding: 12px 16px;
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #ffdad6;
+    color: var(--error-light);
     margin: 0;
     display: flex;
     align-items: center;
@@ -257,28 +256,27 @@ const CSS = `
     font-weight: 900;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    border: 4px solid #000;
+    border: 4px solid var(--border);
     border-radius: 0;
     cursor: pointer;
-    background: #facc15;
+    background: var(--accent);
     color: #231b00;
-    /* machined-edge */
-    box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+    box-shadow: 4px 4px 0px 0px var(--border);
     transition: box-shadow 0.1s, transform 0.1s;
   }
 
   .lp-btn:hover:not(:disabled) {
-    background: #fde047;
+    background: var(--accent-dark);
   }
 
   .lp-btn:active:not(:disabled) {
     transform: translate(2px, 2px);
-    box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+    box-shadow: 0px 0px 0px 0px var(--border);
   }
 
   .lp-btn:disabled {
     background: #574500;
-    color: #9a9078;
+    color: var(--text-tertiary);
     cursor: not-allowed;
     box-shadow: none;
   }
@@ -286,14 +284,14 @@ const CSS = `
   /* ── Divider ── */
   .lp-divider {
     height: 4px;
-    background: #000;
+    background: var(--border);
     display: flex;
   }
 
-  .lp-div-1 { flex: 1; background: #facc15; }
-  .lp-div-2 { flex: 1; background: #4ae176; }
-  .lp-div-3 { flex: 1; background: #0c1322; }
-  .lp-div-4 { flex: 1; background: #93000a; }
+  .lp-div-1 { flex: 1; background: var(--accent); }
+  .lp-div-2 { flex: 1; background: var(--success); }
+  .lp-div-3 { flex: 1; background: var(--bg-secondary); }
+  .lp-div-4 { flex: 1; background: var(--error); }
 
   /* ── Footer ── */
   .lp-footer {
@@ -301,8 +299,8 @@ const CSS = `
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-top: 4px solid #000;
-    background: #070e1d;
+    border-top: 4px solid var(--border);
+    background: var(--bg-secondary);
   }
 
   .lp-footer-left {
@@ -313,13 +311,13 @@ const CSS = `
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #4d4632;
+    color: var(--text-tertiary);
   }
 
   .lp-footer-lock {
     width: 10px;
     height: 10px;
-    border: 2px solid #4d4632;
+    border: 2px solid var(--text-tertiary);
     border-radius: 0;
     position: relative;
   }
@@ -329,7 +327,7 @@ const CSS = `
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #2e3545;
+    color: var(--text-tertiary);
   }
 
   /* ── Responsive ── */

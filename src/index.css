@@ -311,24 +311,24 @@ body {
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  border: 2px solid var(--overlay);
+  border: 2px solid transparent;
   white-space: nowrap;
 }
-.ds-badge-entry    { background: rgba(74,225,118,0.15);  color: var(--success); }
-.ds-badge-exit     { background: rgba(255,59,48,0.15);   color: var(--error-light); }
-.ds-badge-ok       { background: rgba(74,225,118,0.15);  color: var(--success); }
-.ds-badge-warn     { background: rgba(245,158,11,0.15);  color: #f59e0b; }
-.ds-badge-low      { background: rgba(239,68,68,0.15);   color: var(--error); }
-.ds-badge-critical { background: rgba(147,0,10,0.3);     color: var(--error-light); }
-.ds-badge-admin    { background: rgba(250,204,21,0.15);  color: var(--accent); }
-.ds-badge-operator { background: var(--overlay);         color: var(--text-tertiary); }
+.ds-badge-entry    { background: var(--success);           color: #fff; }
+.ds-badge-exit     { background: var(--error);          color: #fff; }
+.ds-badge-ok       { background: var(--success);           color: #fff; }
+.ds-badge-warn     { background: #f59e0b;           color: #fff; }
+.ds-badge-low      { background: var(--error);          color: #fff; }
+.ds-badge-critical { background: var(--error);          color: #fff; }
+.ds-badge-admin    { background: var(--accent);         color: #231b00; }
+.ds-badge-operator { background: var(--text-secondary); color: var(--bg-primary); }
 
 /* ── Status indicators ───────────────────────────────── */
 .ds-dot { width: 8px; height: 8px; flex-shrink: 0; display: inline-block; }
 .ds-dot-ok       { background: var(--success); }
 .ds-dot-warn     { background: #f59e0b; }
 .ds-dot-low      { background: var(--error); }
-.ds-dot-critical { background: var(--error-light); outline: 2px solid var(--error); }
+.ds-dot-critical { background: var(--error); }
 
 /* ── Modal ───────────────────────────────────────────── */
 .ds-modal-backdrop {

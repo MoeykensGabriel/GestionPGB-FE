@@ -11,7 +11,7 @@ import { QK } from '../utils/queryKeys'
 const CSS = `
   .dp-inv-card {
     padding: 12px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid var(--overlay);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -191,15 +191,15 @@ export default function DashboardPage() {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     padding: '11px 18px',
-                    borderBottom: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                    borderBottom: i < arr.length - 1 ? '1px solid var(--overlay)' : 'none',
                     gap: 12,
                   }}
                 >
                   <div style={{ minWidth: 0, flex: 1 }}>
-                    <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <p style={{ fontSize: 13, fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {m.productName}
                     </p>
-                    <p style={{ fontSize: 11, color: 'var(--text-secondary)', marginTop: 2 }}>
+                    <p style={{ fontSize: 11, marginTop: 2 }}>
                       {m.createdBy} · {new Date(m.createdAt).toLocaleString('es-AR')}
                     </p>
                   </div>

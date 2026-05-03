@@ -56,64 +56,64 @@ function buildProducts(rows, mapping) {
 const CSS = `
   .imp-steps {
     display: flex;
-    border-bottom: 4px solid #000;
+    border-bottom: 4px solid var(--border);
   }
   .imp-step {
     flex: 1; padding: 9px 8px; text-align: center;
     font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-    color: #2e3545; border-right: 2px solid #000;
+    color: var(--text-tertiary); border-right: 2px solid var(--border);
   }
   .imp-step:last-child { border-right: none; }
-  .imp-step.active { color: #facc15; background: rgba(250,204,21,0.06); }
-  .imp-step.done   { color: #4ae176; }
+  .imp-step.active { color: var(--accent); background: var(--overlay); }
+  .imp-step.done   { color: var(--success); }
 
   .imp-drop {
-    border: 4px dashed #2e3545; padding: 44px 20px; text-align: center;
+    border: 4px dashed var(--text-tertiary); padding: 44px 20px; text-align: center;
     cursor: pointer; transition: border-color 0.15s, background 0.15s;
   }
-  .imp-drop:hover, .imp-drop.drag { border-color: #facc15; background: rgba(250,204,21,0.04); }
-  .imp-drop-icon { width: 36px; height: 36px; margin: 0 auto 12px; color: #4d5a72; }
-  .imp-drop-title { font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
-  .imp-drop-sub   { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #4d5a72; margin-top: 6px; }
+  .imp-drop:hover, .imp-drop.drag { border-color: var(--accent); background: var(--overlay-hover); }
+  .imp-drop-icon { width: 36px; height: 36px; margin: 0 auto 12px; color: var(--text-secondary); }
+  .imp-drop-title { font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-primary); }
+  .imp-drop-sub   { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); margin-top: 6px; }
 
   .imp-cols { display: flex; flex-wrap: wrap; gap: 6px; }
   .imp-col-chip {
     font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 3px 8px; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.08); color: #4d5a72;
+    padding: 3px 8px; background: var(--overlay); border: 2px solid var(--overlay); color: var(--text-secondary);
   }
 
   .imp-map-grid {
-    border: 4px solid #000;
+    border: 4px solid var(--border);
     overflow: hidden;
   }
   .imp-map-row {
     display: grid; grid-template-columns: 1fr 1fr;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid var(--overlay);
   }
   .imp-map-row:last-child { border-bottom: none; }
   .imp-map-label {
-    padding: 10px 14px; border-right: 4px solid #000; display: flex; align-items: center; gap: 6px;
+    padding: 10px 14px; border-right: 4px solid var(--border); display: flex; align-items: center; gap: 6px;
     font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-    color: #dce2f7; background: #0c1322;
+    color: var(--text-primary); background: var(--bg-secondary);
   }
-  .imp-req { color: #facc15; }
+  .imp-req { color: var(--accent); }
   .imp-map-sel {
-    padding: 0 12px; background: #09090b; display: flex; align-items: center;
+    padding: 0 12px; background: var(--bg-primary); display: flex; align-items: center;
   }
   .imp-map-sel select {
     width: 100%; background: transparent; border: none; outline: none;
     font-family: 'Inter', system-ui, sans-serif; font-size: 12px; font-weight: 600;
-    color: #dce2f7; cursor: pointer; -webkit-appearance: none; padding: 10px 0;
+    color: var(--text-primary); cursor: pointer; -webkit-appearance: none; padding: 10px 0;
   }
-  .imp-map-sel select option { background: #0c1322; }
+  .imp-map-sel select option { background: var(--bg-secondary); }
 
-  .imp-preview-wrap { border: 4px solid #000; overflow-x: auto; }
+  .imp-preview-wrap { border: 4px solid var(--border); overflow-x: auto; }
   .imp-preview-hd {
-    padding: 8px 14px; background: #0c1322; border-bottom: 4px solid #000;
-    font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #facc15;
+    padding: 8px 14px; background: var(--bg-secondary); border-bottom: 4px solid var(--border);
+    font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent);
   }
   .imp-preview-more {
-    padding: 8px 16px; font-size: 10px; color: #2e3545; font-weight: 700;
+    padding: 8px 16px; font-size: 10px; color: var(--text-tertiary); font-weight: 700;
     letter-spacing: 0.1em; text-transform: uppercase;
   }
 

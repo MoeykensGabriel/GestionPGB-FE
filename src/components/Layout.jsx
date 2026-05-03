@@ -16,8 +16,8 @@ const CSS = `
   .ly-sidebar {
     width: 210px;
     flex-shrink: 0;
-    background: #09090b;
-    border-right: 4px solid #000;
+    background: var(--bg-primary);
+    border-right: 4px solid var(--border);
     display: flex;
     flex-direction: column;
     position: sticky;
@@ -28,7 +28,7 @@ const CSS = `
 
   .ly-brand-area {
     padding: 18px 18px 14px;
-    border-bottom: 4px solid #000;
+    border-bottom: 4px solid var(--border);
   }
 
   .ly-brand {
@@ -37,18 +37,18 @@ const CSS = `
     font-style: italic;
     letter-spacing: -0.03em;
     text-transform: uppercase;
-    color: #facc15;
+    color: var(--accent);
     margin: 0;
     line-height: 1;
   }
-  .ly-brand span { color: #fff; }
+  .ly-brand span { color: var(--text-primary); }
 
   .ly-brand-sub {
     font-size: 9px;
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #2e3545;
+    color: var(--text-tertiary);
     margin: 5px 0 0;
   }
 
@@ -59,7 +59,7 @@ const CSS = `
     font-weight: 700;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #1e2a3a;
+    color: var(--text-tertiary);
     padding: 12px 8px 4px;
   }
 
@@ -72,7 +72,7 @@ const CSS = `
     font-weight: 700;
     letter-spacing: 0.07em;
     text-transform: uppercase;
-    color: #3d4f66;
+    color: var(--text-secondary);
     text-decoration: none;
     border: 3px solid transparent;
     border-left: 3px solid transparent;
@@ -83,20 +83,20 @@ const CSS = `
     text-align: left;
   }
   .ly-nav-item:hover {
-    color: #dce2f7;
-    background: rgba(255,255,255,0.04);
-    border-left-color: rgba(255,255,255,0.1);
+    color: var(--text-primary);
+    background: var(--overlay-hover);
+    border-left-color: var(--overlay);
   }
   .ly-nav-item.ly-active {
-    color: #facc15;
-    border-left-color: #facc15;
-    background: rgba(250,204,21,0.07);
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background: var(--overlay);
   }
 
   /* ── Sidebar footer ── */
   .ly-sidebar-ft {
     padding: 10px;
-    border-top: 4px solid #000;
+    border-top: 4px solid var(--border);
   }
   .ly-user-box { padding: 6px 10px 8px; }
   .ly-user-name {
@@ -104,7 +104,7 @@ const CSS = `
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #dce2f7;
+    color: var(--text-primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -114,7 +114,7 @@ const CSS = `
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #2e3545;
+    color: var(--text-tertiary);
     margin-top: 3px;
   }
 
@@ -124,8 +124,8 @@ const CSS = `
   /* ── Mobile header ── */
   .ly-mob-header {
     display: none;
-    background: #09090b;
-    border-bottom: 4px solid #000;
+    background: var(--bg-primary);
+    border-bottom: 4px solid var(--border);
     padding: 13px 16px;
     align-items: center;
     justify-content: space-between;
@@ -137,27 +137,27 @@ const CSS = `
     font-style: italic;
     text-transform: uppercase;
     letter-spacing: -0.03em;
-    color: #facc15;
+    color: var(--accent);
     line-height: 1;
   }
-  .ly-mob-brand span { color: #fff; }
+  .ly-mob-brand span { color: var(--text-primary); }
   .ly-mob-sub {
     font-size: 9px;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #2e3545;
+    color: var(--text-tertiary);
     margin-top: 3px;
   }
   .ly-mob-logout {
     background: none;
     border: none;
     cursor: pointer;
-    color: #3d4f66;
+    color: var(--text-secondary);
     padding: 6px;
     transition: color 0.15s;
   }
-  .ly-mob-logout:hover { color: #facc15; }
+  .ly-mob-logout:hover { color: var(--accent); }
 
   /* ── Main ── */
   .ly-main { flex: 1; padding: 20px; padding-bottom: 84px; }
@@ -167,8 +167,8 @@ const CSS = `
     display: none;
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    background: #09090b;
-    border-top: 4px solid #000;
+    background: var(--bg-primary);
+    border-top: 4px solid var(--border);
     z-index: 50;
   }
   .ly-bot-inner { display: flex; }
@@ -184,16 +184,16 @@ const CSS = `
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #3d4f66;
+    color: var(--text-secondary);
     text-decoration: none;
     background: none;
     border: none;
-    border-left: 1px solid #000;
+    border-left: 1px solid var(--border);
     cursor: pointer;
     transition: color 0.12s, background 0.12s;
   }
   .ly-bot-btn:first-child { border-left: none; }
-  .ly-bot-btn.ly-active, .ly-bot-btn:hover { color: #facc15; background: rgba(250,204,21,0.06); }
+  .ly-bot-btn.ly-active, .ly-bot-btn:hover { color: var(--accent); background: var(--overlay); }
 
   /* ── Admin bottom sheet ── */
   .ly-sheet-bd {
@@ -205,29 +205,29 @@ const CSS = `
     position: fixed;
     bottom: 0; left: 0; right: 0;
     z-index: 50;
-    background: #09090b;
-    border-top: 4px solid #000;
-    box-shadow: 0 -6px 0 0 rgba(0,0,0,1);
+    background: var(--bg-primary);
+    border-top: 4px solid var(--border);
+    box-shadow: 0 -6px 0 0 var(--border);
   }
   .ly-sheet-hd {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 14px 18px;
-    border-bottom: 4px solid #000;
+    border-bottom: 4px solid var(--border);
   }
   .ly-sheet-title {
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #facc15;
+    color: var(--accent);
   }
   .ly-sheet-close {
     background: none; border: none; cursor: pointer;
-    color: #9a9078; padding: 4px; transition: color 0.15s;
+    color: var(--text-tertiary); padding: 4px; transition: color 0.15s;
   }
-  .ly-sheet-close:hover { color: #fff; }
+  .ly-sheet-close:hover { color: var(--text-primary); }
   .ly-sheet-nav { padding: 8px; }
   .ly-sheet-item {
     width: 100%;
@@ -239,7 +239,7 @@ const CSS = `
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #dce2f7;
+    color: var(--text-primary);
     background: none;
     border: none;
     border-left: 3px solid transparent;
@@ -247,7 +247,7 @@ const CSS = `
     text-align: left;
     transition: color 0.12s, border-color 0.12s, background 0.12s;
   }
-  .ly-sheet-item:hover { color: #facc15; border-left-color: #facc15; background: rgba(250,204,21,0.06); }
+  .ly-sheet-item:hover { color: var(--accent); border-left-color: var(--accent); background: var(--overlay); }
 
   /* ── Responsive ── */
   @media (max-width: 767px) {
