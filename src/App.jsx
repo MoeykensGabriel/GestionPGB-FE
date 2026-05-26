@@ -11,6 +11,7 @@ import ProductsPage from './pages/ProductsPage'
 import MovementsPage from './pages/MovementsPage'
 import ScanPage from './pages/ScanPage'
 import UsersPage from './pages/UsersPage'
+import WorkshopOrdersPage from './pages/WorkshopOrdersPage'
 
 const queryClient = new QueryClient()
 
@@ -39,6 +40,9 @@ export default function App() {
                       } />
                       <Route path="/movements" element={
                         <ProtectedRoute requiredRole="Admin"><MovementsPage /></ProtectedRoute>
+                      } />
+                      <Route path="/workshop-orders" element={
+                        <ProtectedRoute requiredRole="Admin"><WorkshopOrdersPage /></ProtectedRoute>
                       } />
                       <Route path="/users" element={
                         <ProtectedRoute requiredRole="Admin"><UsersPage /></ProtectedRoute>

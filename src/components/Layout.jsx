@@ -6,7 +6,7 @@ import { useSignalR } from '../hooks/useSignalR'
 import { QK } from '../utils/queryKeys'
 import {
   IconHome, IconBox, IconArrows, IconScan,
-  IconUsers, IconLogout, IconShield, IconX,
+  IconUsers, IconLogout, IconShield, IconX, IconWrench,
 } from './Icons'
 
 const CSS = `
@@ -262,10 +262,11 @@ const CSS = `
 `
 
 const adminSidebarItems = [
-  { to: '/',          label: 'Dashboard',   Icon: IconHome,  end: true },
-  { to: '/products',  label: 'Productos',   Icon: IconBox },
-  { to: '/movements', label: 'Movimientos', Icon: IconArrows },
-  { to: '/scan',      label: 'Escanear',    Icon: IconScan },
+  { to: '/',                 label: 'Dashboard',     Icon: IconHome,   end: true },
+  { to: '/products',         label: 'Productos',     Icon: IconBox },
+  { to: '/movements',        label: 'Movimientos',   Icon: IconArrows },
+  { to: '/workshop-orders',  label: 'Pedidos taller', Icon: IconWrench },
+  { to: '/scan',             label: 'Escanear',      Icon: IconScan },
 ]
 
 const adminSidebarSecondary = [
@@ -273,10 +274,11 @@ const adminSidebarSecondary = [
 ]
 
 const adminPanelItems = [
-  { to: '/',          label: 'Dashboard',   Icon: IconHome,  end: true },
-  { to: '/products',  label: 'Productos',   Icon: IconBox },
-  { to: '/movements', label: 'Movimientos', Icon: IconArrows },
-  { to: '/users',     label: 'Usuarios',    Icon: IconUsers },
+  { to: '/',                 label: 'Dashboard',     Icon: IconHome,   end: true },
+  { to: '/products',         label: 'Productos',     Icon: IconBox },
+  { to: '/movements',        label: 'Movimientos',   Icon: IconArrows },
+  { to: '/workshop-orders',  label: 'Pedidos taller', Icon: IconWrench },
+  { to: '/users',            label: 'Usuarios',      Icon: IconUsers },
 ]
 
 export default function Layout({ children }) {

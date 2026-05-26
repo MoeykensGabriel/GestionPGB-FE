@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import * as signalR from '@microsoft/signalr'
 
-const HUB_URL = `${import.meta.env.VITE_API_URL ?? 'http://localhost:5122'}/hubs/stock`
+const HUB_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:5122'}/hubs/stock`
 
 const SignalRContext = createContext(null)
 

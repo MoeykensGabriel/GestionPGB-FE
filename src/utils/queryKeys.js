@@ -1,6 +1,7 @@
 export const QK = {
-  products:  ['products'],
-  lowStock:  ['products', 'low-stock'],
-  movements: ['movements'],
-  users:     ['users'],
+  products:       ['products'],
+  lowStock:       ['products', 'low-stock'],
+  movements:      ['movements'],
+  users:          ['users'],
+  workshopOrders: ['workshop-orders'],
 }
