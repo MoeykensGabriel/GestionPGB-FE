@@ -182,6 +182,44 @@ const CSS = `
     color: var(--text-secondary); transition: color 0.15s; padding: 0; font-family: 'Inter', system-ui, sans-serif;
   }
   .sp-log-clear:hover { color: var(--text-tertiary); }
+
+  /* ── Layout en columnas (controles + log) ── */
+  .sp-cols { display: flex; flex-direction: column; gap: 16px; }
+  .sp-left { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+
+  /* ── Placeholder (esperando escaneo) ── */
+  .sp-placeholder {
+    border: 4px dashed var(--border);
+    padding: 28px 20px; text-align: center;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-tertiary);
+    background: var(--bg-primary);
+  }
+
+  /* ── Session log mobile ── */
+  .sp-mob-log {
+    background: var(--bg-primary); border: 4px solid var(--border);
+    box-shadow: 4px 4px 0 0 var(--border);
+  }
+  .sp-mob-log-hd {
+    padding: 10px 14px; border-bottom: 4px solid var(--border); background: var(--bg-secondary);
+    font-size: 9px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .sp-mob-row {
+    padding: 10px 14px; border-bottom: 1px solid var(--overlay);
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  }
+  .sp-mob-row:last-child { border-bottom: none; }
+
+  /* ── Visibilidad log: mobile muestra sp-mob-log; desktop muestra sidebar ── */
+  #sp-log-desktop { display: none; }
+  @media (min-width: 768px) {
+    .sp-cols { flex-direction: row; align-items: flex-start; }
+    .sp-left { flex: 1; }
+    #sp-log-desktop { display: flex; max-height: 72vh; }
+    #sp-log-mobile  { display: none; }
+  }
 `
 
 export default function ScanPage() {
