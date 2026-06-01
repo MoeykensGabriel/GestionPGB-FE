@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { scanBarcode } from '../api/movements'
+import { getProductByBarcode } from '../api/products'
 import { useSignalR } from '../hooks/useSignalR'
 import { IconArrowRight } from '../components/Icons'
 import { QK } from '../utils/queryKeys'
@@ -50,6 +51,15 @@ const CSS = `
   }
   .sp-mode-btn.salida:active { transform: translate(2px,2px); box-shadow: 0 0 0 0 var(--border); }
 
+  /* Consulta — modo de solo lectura, color informativo (azul) y full-width */
+  .sp-mode-consulta { width: 100%; margin-top: 10px; }
+  .sp-mode-btn.consulta {
+    background: #3b82f6;
+    color: #f0f6ff;
+    box-shadow: 4px 4px 0 0 var(--border);
+  }
+  .sp-mode-btn.consulta:active { transform: translate(2px,2px); box-shadow: 0 0 0 0 var(--border); }
+
   /* ── Result card ── */
   .sp-result {
     border: 4px solid var(--border);
@@ -57,12 +67,27 @@ const CSS = `
   }
   .sp-result.entrada { background: var(--overlay); border-left-color: var(--success); }
   .sp-result.salida  { background: var(--overlay); border-left-color: var(--error); }
+  .sp-result.consulta { background: var(--overlay); border-left: 6px solid #3b82f6; }
   .sp-result-type {
     font-size: 9px; font-weight: 700; letter-spacing: 0.18em;
     text-transform: uppercase; margin-bottom: 7px;
   }
   .sp-result.entrada .sp-result-type { color: var(--success); }
   .sp-result.salida  .sp-result-type { color: var(--error-light); }
+  .sp-result.consulta .sp-result-type { color: #3b82f6; }
+
+  /* Chips de metadata en consulta (código, proveedor, stock bajo) */
+  .sp-consulta-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .sp-consulta-chip {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 5px 10px;
+    border: 2px solid var(--border); background: var(--bg-primary);
+    color: var(--text-secondary); font-family: 'Courier New', monospace;
+  }
+  .sp-consulta-chip.low {
+    border-color: var(--error); color: var(--error-light);
+    background: var(--overlay); font-family: 'Inter', system-ui, sans-serif;
+  }
   .sp-result-name {
     font-size: 15px; font-weight: 800; color: var(--text-primary);
     margin-bottom: 14px; letter-spacing: -0.01em; line-height: 1.2;
@@ -164,10 +189,16 @@ export default function ScanPage() {
   const [mode, setMode] = useState('ENTRADA')
   const [barcode, setBarcode] = useState('')
   const [lastResult, setLastResult] = useState(null)
+  const [consultaResult, setConsultaResult] = useState(null)
   const [error, setError] = useState('')
   const [sessionLog, setSessionLog] = useState([])
   const [resultKey, setResultKey] = useState(0)
   const inputRef = useRef(null)
+
+  // Ref del modo actual — lo usan los handlers de SignalR (closures estables)
+  // para no pisar la consulta local con eventos remotos.
+  const modeRef = useRef(mode)
+  useEffect(() => { modeRef.current = mode }, [mode])
 
   useEffect(() => {
     inputRef.current?.focus()
@@ -192,16 +223,29 @@ export default function ScanPage() {
     })
 
   const { isConnected, sendSetMode } = useSignalR({
-    onModeChanged: (newMode) => { setMode(newMode); setError('') },
+    onModeChanged: (newMode) => {
+      // Si estoy consultando localmente, ignoro cambios de modo remotos
+      // para no sacar al operario de su búsqueda.
+      if (modeRef.current === 'CONSULTA') return
+      setMode(newMode); setError('')
+    },
     // Muestra el resultado en todos los dispositivos conectados, no solo el que escaneó
     onStockUpdated: (data) => {
+      // En modo consulta no piso mi resultado con scans de otros dispositivos
+      if (modeRef.current === 'CONSULTA') return
       setLastResult(data)
       setResultKey(k => k + 1)
       addToLog(data)
     },
   })
 
-  const handleModeChange = (newMode) => { setMode(newMode); setError(''); sendSetMode(newMode) }
+  const handleModeChange = (newMode) => {
+    setMode(newMode)
+    setError('')
+    setConsultaResult(null)
+    // CONSULTA es un modo local de solo lectura — no se difunde a otros dispositivos.
+    if (newMode !== 'CONSULTA') sendSetMode(newMode)
+  }
 
   const mutation = useMutation({
     mutationFn: scanBarcode,
@@ -223,6 +267,24 @@ export default function ScanPage() {
     },
   })
 
+  // Modo consulta: solo lectura, NO altera stock. Llama al endpoint de búsqueda por código.
+  const consultaMutation = useMutation({
+    mutationFn: (value) => getProductByBarcode(value),
+    onSuccess: ({ data }) => {
+      setConsultaResult(data)
+      setResultKey(k => k + 1)
+      setError('')
+      setBarcode('')
+      setTimeout(() => inputRef.current?.focus(), 80)
+    },
+    onError: () => {
+      setConsultaResult(null)
+      setError('Código no encontrado en el sistema')
+      setBarcode('')
+      setTimeout(() => inputRef.current?.focus(), 80)
+    },
+  })
+
   const handleScan = (e) => {
     e.preventDefault()
     const raw = inputRef.current?.value ?? barcode
@@ -231,10 +293,16 @@ export default function ScanPage() {
 
     setBarcode('')
     if (inputRef.current) inputRef.current.value = ''
-    mutation.mutate({ barcode: value, type: mode })
+
+    if (mode === 'CONSULTA') {
+      consultaMutation.mutate(value)
+    } else {
+      mutation.mutate({ barcode: value, type: mode })
+    }
   }
 
   const resultClass = (lastResult?.type ?? 'ENTRADA').toLowerCase()
+  const isPending = mutation.isPending || consultaMutation.isPending
 
   return (
     <>
@@ -272,26 +340,65 @@ export default function ScanPage() {
               })}
             </div>
 
-            {/* Last result */}
-            {lastResult ? (
-              <div key={resultKey} className={`sp-result scan-result ${resultClass}`}>
-                <p className="sp-result-type">Último escaneo · {lastResult.type}</p>
-                <p className="sp-result-name">{lastResult.productName}</p>
-                <div className="sp-result-grid">
-                  <div className="sp-result-cell">
-                    <p className="sp-result-cell-lbl">Movimiento</p>
-                    <p className="sp-result-cell-val tabular">
-                      {lastResult.quantity > 0 ? `+${lastResult.quantity}` : lastResult.quantity}
-                    </p>
+            {/* Consulta: modo de solo lectura, separado de los que mueven stock */}
+            <button
+              onClick={() => handleModeChange('CONSULTA')}
+              className={`sp-mode-btn sp-mode-consulta ${mode === 'CONSULTA' ? 'consulta' : 'inactive'}`}
+            >
+              <span className="sp-mode-sub">{mode === 'CONSULTA' ? 'Modo activo · no altera stock' : 'Cambiar a · solo consultar'}</span>
+              CONSULTA
+            </button>
+
+            {/* Result area */}
+            {mode === 'CONSULTA' ? (
+              consultaResult ? (
+                <div key={resultKey} className="sp-result scan-result consulta">
+                  <p className="sp-result-type">Consulta · solo lectura</p>
+                  <p className="sp-result-name">{consultaResult.itemName}</p>
+                  <div className="sp-result-grid">
+                    <div className="sp-result-cell">
+                      <p className="sp-result-cell-lbl">Stock actual</p>
+                      <p className="sp-result-cell-val tabular">{consultaResult.currentStock}</p>
+                    </div>
+                    <div className="sp-result-cell">
+                      <p className="sp-result-cell-lbl">Disponible</p>
+                      <p className="sp-result-cell-val tabular">{consultaResult.availableStock}</p>
+                    </div>
                   </div>
-                  <div className="sp-result-cell">
-                    <p className="sp-result-cell-lbl">Stock actual</p>
-                    <p className="sp-result-cell-val tabular">{lastResult.currentStock}</p>
+                  <div className="sp-consulta-meta">
+                    <span className="sp-consulta-chip">{consultaResult.barcode}</span>
+                    {consultaResult.providerName && (
+                      <span className="sp-consulta-chip">{consultaResult.providerName}</span>
+                    )}
+                    {consultaResult.isLowStock && (
+                      <span className="sp-consulta-chip low">Stock bajo</span>
+                    )}
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="sp-placeholder">Escaneá una bolsa para identificar el componente...</div>
+              )
             ) : (
-              <div className="sp-placeholder">Esperando escaneo...</div>
+              lastResult ? (
+                <div key={resultKey} className={`sp-result scan-result ${resultClass}`}>
+                  <p className="sp-result-type">Último escaneo · {lastResult.type}</p>
+                  <p className="sp-result-name">{lastResult.productName}</p>
+                  <div className="sp-result-grid">
+                    <div className="sp-result-cell">
+                      <p className="sp-result-cell-lbl">Movimiento</p>
+                      <p className="sp-result-cell-val tabular">
+                        {lastResult.quantity > 0 ? `+${lastResult.quantity}` : lastResult.quantity}
+                      </p>
+                    </div>
+                    <div className="sp-result-cell">
+                      <p className="sp-result-cell-lbl">Stock actual</p>
+                      <p className="sp-result-cell-val tabular">{lastResult.currentStock}</p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="sp-placeholder">Esperando escaneo...</div>
+              )
             )}
 
             {/* Barcode form */}
@@ -310,11 +417,11 @@ export default function ScanPage() {
                   />
                   <button
                     type="submit"
-                    disabled={mutation.isPending}
+                    disabled={isPending}
                     className="ds-btn"
                     style={{ height: 52, minWidth: 68, flexShrink: 0 }}
                   >
-                    {mutation.isPending
+                    {isPending
                       ? '...'
                       : <><span>OK</span><IconArrowRight style={{ width: 14, height: 14 }} /></>
                     }
