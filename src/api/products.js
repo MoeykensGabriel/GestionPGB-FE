@@ -1,6 +1,7 @@
 import api from './axios'
 
 export const getProducts = (params) => api.get('/products', { params })
+export const getProviders = () => api.get('/products/providers')
 export const getProductById = (id) => api.get(`/products/${id}`)
 export const getProductByBarcode = (barcode) => api.get(`/products/barcode/${barcode}`)
 export const getLowStockProducts = () => api.get('/products/low-stock')

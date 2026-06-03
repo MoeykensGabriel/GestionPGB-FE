@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient, keepPreviousData } from '@tanstack/react-query'
-import { getProducts, createProduct, updateProduct, deleteProduct } from '../api/products'
+import { getProducts, getProviders, createProduct, updateProduct, deleteProduct } from '../api/products'
 import { IconPlus, IconTrash, IconX } from '../components/Icons'
 import { FormField } from '../components/FormField'
 import { ModalBackdrop } from '../components/ModalBackdrop'
@@ -31,6 +31,14 @@ const CSS = `
   .pp-card-stock-sub { font-size: 10px; color: var(--text-secondary); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
   .pp-card-actions { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
   .pp-hint { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: var(--text-secondary); padding: 8px 0 0; text-transform: uppercase; }
+
+  /* Fila de filtros: búsqueda + selector de proveedor */
+  .pp-filters { display: flex; gap: 10px; align-items: center; }
+  .pp-provider-select { max-width: 220px; flex-shrink: 0; cursor: pointer; }
+  @media (max-width: 640px) {
+    .pp-filters { flex-wrap: wrap; }
+    .pp-provider-select { max-width: none; flex: 1; }
+  }
 `
 
 const emptyForm = {
@@ -50,6 +58,7 @@ export default function ProductsPage() {
   const [form, setForm]                   = useState(emptyForm)
   const [formError, setFormError]         = useState('')
   const [search, setSearch]               = useState('')
+  const [provider, setProvider]           = useState('')
   const [page, setPage]                   = useState(1)
   const [confirmDeleteId, setConfirmDeleteId] = useState(null)
 
@@ -57,9 +66,20 @@ export default function ProductsPage() {
   const PAGE_SIZE = 20
 
   const { data, isLoading } = useQuery({
-    queryKey: [...QK.products, { page, pageSize: PAGE_SIZE, search: debouncedSearch }],
-    queryFn: () => getProducts({ page, pageSize: PAGE_SIZE, search: debouncedSearch || undefined }).then(r => r.data),
+    queryKey: [...QK.products, { page, pageSize: PAGE_SIZE, search: debouncedSearch, provider }],
+    queryFn: () => getProducts({
+      page, pageSize: PAGE_SIZE,
+      search: debouncedSearch || undefined,
+      provider: provider || undefined,
+    }).then(r => r.data),
     placeholderData: keepPreviousData,
+  })
+
+  // Lista de proveedores para el selector. Se refresca al invalidar QK.products
+  // (alta/edición/baja/importación), porque su clave también empieza con 'products'.
+  const { data: providers = [] } = useQuery({
+    queryKey: [...QK.products, 'providers'],
+    queryFn: () => getProviders().then(r => r.data),
   })
 
   const products = data?.items ?? []
@@ -140,6 +160,11 @@ export default function ProductsPage() {
     setPage(1)
   }
 
+  const handleProviderChange = (e) => {
+    setProvider(e.target.value)
+    setPage(1)
+  }
+
   const generateBarcode = () => {
     const existing = new Set(products.map(p => p.barcode))
     let code
@@ -173,19 +198,42 @@ export default function ProductsPage() {
           </div>
         </div>
 
-        <input
-          type="text"
-          placeholder="Buscar por nombre, código o proveedor..."
-          value={search}
-          onChange={handleSearchChange}
-          className="ds-search"
-        />
+        <div className="pp-filters">
+          <input
+            type="text"
+            placeholder="Buscar por nombre, código o proveedor..."
+            value={search}
+            onChange={handleSearchChange}
+            className="ds-search"
+            style={{ flex: 1 }}
+          />
+          <select
+            value={provider}
+            onChange={handleProviderChange}
+            className="ds-input pp-provider-select"
+            aria-label="Filtrar por proveedor"
+          >
+            <option value="">Todos los proveedores</option>
+            {providers.map((pv) => (
+              <option key={pv} value={pv}>{pv}</option>
+            ))}
+          </select>
+          {provider && (
+            <button
+              onClick={() => { setProvider(''); setPage(1) }}
+              className="ds-btn-ghost"
+              style={{ height: 44, flexShrink: 0 }}
+            >
+              Limpiar
+            </button>
+          )}
+        </div>
 
         {isLoading ? (
           <p className="ds-loading">Cargando productos...</p>
         ) : products.length === 0 ? (
           <p className="ds-empty">
-            {search ? 'Sin resultados para la búsqueda' : 'No hay productos cargados'}
+            {search || provider ? 'Sin resultados para el filtro aplicado' : 'No hay productos cargados'}
           </p>
         ) : (
           <>
