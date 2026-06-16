@@ -365,7 +365,7 @@ export default function ProductsPage() {
               <FormField label="Descripción" value={form.description}
                 onChange={v => setForm({ ...form, description: v })} placeholder="Opcional" />
               <FormField label="Proveedor" value={form.providerName}
-                onChange={v => setForm({ ...form, providerName: v })} required />
+                onChange={v => setForm({ ...form, providerName: v })} required options={providers} />
 
               <div className="ds-grid-2">
                 {!editingId && (
