@@ -159,7 +159,12 @@ export default function DashboardPage() {
                         <span className={`ds-dot ${cfg.dot}`} style={{ flexShrink: 0 }} />
                         <div style={{ minWidth: 0 }}>
                           <p className="dp-inv-name">{p.itemName}</p>
-                          <p className="dp-inv-prov">{p.providerName}</p>
+                          {p.description && (
+                            <p className="ds-mono" style={{ fontSize: 12.5, color: 'var(--text-secondary)', marginTop: 3, whiteSpace: 'normal', lineHeight: 1.4 }}>
+                              {p.description}
+                            </p>
+                          )}
+                          <p className="dp-inv-prov" style={{ marginTop: 3 }}>{p.providerName}</p>
                         </div>
                       </div>
                       <div style={{ textAlign: 'right', flexShrink: 0 }}>
@@ -199,6 +204,11 @@ export default function DashboardPage() {
                     <p style={{ fontSize: 13, fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {m.productName}
                     </p>
+                    {m.productDescription && (
+                      <p className="ds-mono" style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2, whiteSpace: 'normal', lineHeight: 1.4 }}>
+                        {m.productDescription}
+                      </p>
+                    )}
                     <p style={{ fontSize: 11, marginTop: 2 }}>
                       {m.createdBy} · {new Date(m.createdAt).toLocaleString('es-AR')}
                     </p>
