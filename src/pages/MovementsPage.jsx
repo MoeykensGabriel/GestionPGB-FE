@@ -208,7 +208,15 @@ export default function MovementsPage() {
                 <tbody>
                   {movements.map((m) => (
                     <tr key={m.id}>
-                      <td style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{m.productName}</td>
+                      <td>
+                        <p style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{m.productName}</p>
+                        <p className="ds-mono" style={{ fontSize: 12, marginTop: 2 }}>{m.productBarcode}</p>
+                        {m.productDescription && (
+                          <p className="ds-mono" style={{ fontSize: 11, color: 'var(--text-tertiary)', marginTop: 2 }}>
+                            {m.productDescription}
+                          </p>
+                        )}
+                      </td>
                       <td>
                         <span className={`ds-badge ${movementBadge(m.type)}`}>{m.type}</span>
                       </td>
@@ -242,7 +250,15 @@ export default function MovementsPage() {
               {movements.map((m) => (
                 <div key={m.id} className="mp-card">
                   <div className="mp-card-top">
-                    <p className="mp-card-prod">{m.productName}</p>
+                    <div style={{ minWidth: 0, flex: 1 }}>
+                      <p className="mp-card-prod">{m.productName}</p>
+                      <p className="ds-mono" style={{ fontSize: 11, marginTop: 2 }}>{m.productBarcode}</p>
+                      {m.productDescription && (
+                        <p className="ds-mono" style={{ fontSize: 10, color: 'var(--text-tertiary)', marginTop: 2, whiteSpace: 'normal' }}>
+                          {m.productDescription}
+                        </p>
+                      )}
+                    </div>
                     <span className={`ds-badge ${movementBadge(m.type)}`}>{m.type}</span>
                   </div>
                   <div className="mp-card-bottom">
