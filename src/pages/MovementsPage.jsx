@@ -252,9 +252,9 @@ export default function MovementsPage() {
                   <div className="mp-card-top">
                     <div style={{ minWidth: 0, flex: 1 }}>
                       <p className="mp-card-prod">{m.productName}</p>
-                      <p className="ds-mono" style={{ fontSize: 11, marginTop: 2 }}>{m.productBarcode}</p>
+                      <p className="ds-mono" style={{ fontSize: 12.5, marginTop: 3 }}>{m.productBarcode}</p>
                       {m.productDescription && (
-                        <p className="ds-mono" style={{ fontSize: 10, color: 'var(--text-tertiary)', marginTop: 2, whiteSpace: 'normal' }}>
+                        <p className="ds-mono" style={{ fontSize: 12.5, color: 'var(--text-secondary)', marginTop: 3, whiteSpace: 'normal', lineHeight: 1.4 }}>
                           {m.productDescription}
                         </p>
                       )}

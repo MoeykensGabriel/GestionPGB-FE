@@ -301,6 +301,11 @@ export default function ProductsPage() {
                       <div style={{ minWidth: 0, flex: 1 }}>
                         <p className="pp-card-name">{p.itemName}</p>
                         <p className="pp-card-barcode">{p.barcode}</p>
+                        {p.description && (
+                          <p className="ds-mono" style={{ fontSize: 12.5, color: 'var(--text-secondary)', marginTop: 3, whiteSpace: 'normal', lineHeight: 1.4 }}>
+                            {p.description}
+                          </p>
+                        )}
                       </div>
                       <span className={`ds-badge ${cfg.badge}`}>{cfg.label}</span>
                     </div>
