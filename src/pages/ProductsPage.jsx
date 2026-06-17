@@ -201,7 +201,7 @@ export default function ProductsPage() {
         <div className="pp-filters">
           <input
             type="text"
-            placeholder="Buscar por nombre, código o proveedor..."
+            placeholder="Buscar por nombre, código, descripción o proveedor..."
             value={search}
             onChange={handleSearchChange}
             className="ds-search"
