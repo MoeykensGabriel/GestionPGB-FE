@@ -185,7 +185,7 @@ export default function ProductsPage() {
 
         <div className="ds-page-hd">
           <h2 className="ds-page-title">Productos</h2>
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {isAdmin && (
               <button onClick={() => setShowImport(true)} className="ds-btn-ghost" style={{ height: 44 }}>
                 Importar Excel

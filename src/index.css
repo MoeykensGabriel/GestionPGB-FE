@@ -44,6 +44,10 @@ body {
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.2s, color 0.2s;
+  /* Evita scroll horizontal en mobile: el desborde rompe el position:fixed
+     de la barra inferior (se ancla a la anchura "fantasma" y se va de la vista).
+     'clip' no crea contenedor de scroll, asi que no afecta sticky/fixed. */
+  overflow-x: clip;
 }
 
 .tabular { font-variant-numeric: tabular-nums; }
@@ -401,8 +405,10 @@ body {
 }
 
 /* ── Grids ───────────────────────────────────────────── */
-.ds-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.ds-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+/* minmax(0, 1fr): permite que las celdas se achiquen por debajo de su
+   contenido en mobile, evitando el desborde horizontal. */
+.ds-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.ds-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 
 /* ── Search ──────────────────────────────────────────── */
 .ds-search {
@@ -444,4 +450,4 @@ body {
 /* ── Responsive visibility ───────────────────────────── */
 @media (max-width: 767px) { .ds-desktop { display: none !important; } }
 @media (min-width: 768px) { .ds-mobile  { display: none !important; } }
-.
+
