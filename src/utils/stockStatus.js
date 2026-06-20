@@ -1,7 +1,9 @@
 export function stockStatus(product) {
   const ratio = product.currentStock / (product.minRequiredStock || 1)
   if (product.currentStock <= 0) return 'critical'
-  if (ratio <= 1) return 'low'
+  // Crítico solo si está ESTRICTAMENTE por debajo del mínimo (stock < mín, no <=).
+  // Justo en el mínimo ya no cuenta como crítico.
+  if (product.currentStock < product.minRequiredStock) return 'low'
   if (ratio <= 1.5) return 'warn'
   return 'ok'
 }
