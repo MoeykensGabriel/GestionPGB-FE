@@ -320,7 +320,7 @@ export function ImportProductsModal({ onClose }) {
                     {products.slice(0, 5).map((p, i) => (
                       <tr key={i}>
                         <td><span className="ds-mono">{p.barcode}</span></td>
-                        <td style={{ fontWeight: 700, color: '#fff' }}>{p.itemName}</td>
+                        <td className="ds-prod-name" style={{ fontWeight: 700 }}>{p.itemName}</td>
                         <td style={{ color: '#9a9078', fontSize: 12 }}>{p.providerName || '—'}</td>
                         <td className="right tabular" style={{ fontWeight: 700 }}>{p.currentStock}</td>
                         <td className="right tabular" style={{ color: '#4d5a72', fontWeight: 700 }}>{p.minRequiredStock}</td>

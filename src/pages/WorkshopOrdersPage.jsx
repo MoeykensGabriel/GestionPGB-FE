@@ -127,7 +127,7 @@ const CSS = `
   }
   .wo-item:last-child { border-bottom: none; }
   .wo-item-bar { width: 6px; height: 36px; background: currentColor; }
-  .wo-item-name { font-size: 13px; font-weight: 700; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .wo-item-name { font-size: 13px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .wo-item-code { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; font-family: ui-monospace, "SF Mono", monospace; }
   .wo-item-qty {
     display: flex;
@@ -330,7 +330,7 @@ export default function WorkshopOrdersPage() {
                     <div key={item.id} className="wo-item">
                       <div className="wo-item-bar" style={{ color: ic.color }} />
                       <div style={{ minWidth: 0 }}>
-                        <p className="wo-item-name">
+                        <p className="wo-item-name ds-prod-name">
                           {item.productName ?? `(Código no encontrado en el sistema)`}
                         </p>
                         <p className="wo-item-code">

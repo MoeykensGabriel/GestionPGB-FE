@@ -23,7 +23,7 @@ const CSS = `
     gap: 10px;
   }
   .pp-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-  .pp-card-name { font-size: 15px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.01em; }
+  .pp-card-name { font-size: 15px; font-weight: 800; letter-spacing: -0.01em; }
   .pp-card-barcode { font-family: 'Courier New', monospace; font-size: 13px; color: var(--text-primary); margin-top: 3px; font-weight: 600; }
   .pp-card-bottom { display: flex; align-items: flex-end; justify-content: space-between; }
   .pp-card-prov { font-size: 11px; color: var(--text-tertiary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
@@ -32,34 +32,9 @@ const CSS = `
   .pp-card-actions { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
   .pp-hint { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: var(--text-secondary); padding: 8px 0 0; text-transform: uppercase; }
 
-  /* ── Nombre y descripción con color por tema ── */
-  .pp-prod-name {
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: -0.01em;
-  }
-  .pp-prod-desc {
-    font-family: 'Courier New', monospace;
-    font-size: 12px;
-    letter-spacing: 0.05em;
-    margin-top: 2px;
-  }
-  .pp-card-desc {
-    font-family: 'Courier New', monospace;
-    font-size: 12.5px;
-    letter-spacing: 0.05em;
-    margin-top: 3px;
-    white-space: normal;
-    line-height: 1.4;
-  }
-  [data-theme="dark"] .pp-prod-name,
-  [data-theme="dark"] .pp-card-name { color: var(--accent); }
-  [data-theme="light"] .pp-prod-name,
-  [data-theme="light"] .pp-card-name { color: #000000; }
-  [data-theme="dark"] .pp-prod-desc,
-  [data-theme="dark"] .pp-card-desc { color: #ffffff; }
-  [data-theme="light"] .pp-prod-desc,
-  [data-theme="light"] .pp-card-desc { color: #374151; }
+  .pp-prod-name { font-size: 15px; }
+  .pp-prod-desc { font-family: 'Courier New', monospace; font-size: 12px; margin-top: 2px; }
+  .pp-card-desc { font-family: 'Courier New', monospace; font-size: 12.5px; margin-top: 3px; white-space: normal; line-height: 1.4; }
 
   /* Fila de filtros: búsqueda + selector de proveedor */
   .pp-filters { display: flex; gap: 10px; align-items: center; }
@@ -289,8 +264,8 @@ export default function ProductsPage() {
                         <td><span className={`ds-dot ${cfg.dot}`} /></td>
                         <td><span className="ds-mono" style={{ fontSize: 14, fontWeight: 600 }}>{p.barcode}</span></td>
                         <td>
-                          <p className="pp-prod-name">{p.itemName}</p>
-                          {p.description && <p className="pp-prod-desc">{p.description}</p>}
+                          <p className="pp-prod-name ds-prod-name">{p.itemName}</p>
+                          {p.description && <p className="pp-prod-desc ds-prod-desc">{p.description}</p>}
                         </td>
                         <td><span style={{ fontSize: 12 }}>{p.providerName}</span></td>
                         <td className="right">
@@ -328,10 +303,10 @@ export default function ProductsPage() {
                   <div key={p.id} className="pp-card">
                     <div className="pp-card-top">
                       <div style={{ minWidth: 0, flex: 1 }}>
-                        <p className="pp-card-name">{p.itemName}</p>
+                        <p className="pp-card-name ds-prod-name">{p.itemName}</p>
                         <p className="pp-card-barcode">{p.barcode}</p>
                         {p.description && (
-                          <p className="pp-card-desc">
+                          <p className="pp-card-desc ds-prod-desc">
                             {p.description}
                           </p>
                         )}

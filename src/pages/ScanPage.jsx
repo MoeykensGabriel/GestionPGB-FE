@@ -89,7 +89,7 @@ const CSS = `
     background: var(--overlay); font-family: 'Inter', system-ui, sans-serif;
   }
   .sp-result-name {
-    font-size: 15px; font-weight: 800; color: var(--text-primary);
+    font-size: 15px; font-weight: 800;
     margin-bottom: 14px; letter-spacing: -0.01em; line-height: 1.2;
   }
   .sp-result-grid {
@@ -172,7 +172,7 @@ const CSS = `
     display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
   }
   .sp-log-row:last-child { border-bottom: none; }
-  .sp-log-name { font-size: 12px; font-weight: 700; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sp-log-name { font-size: 12px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .sp-log-sub { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
   .sp-log-qty { font-size: 15px; font-weight: 900; font-variant-numeric: tabular-nums; flex-shrink: 0; }
   .sp-log-ft { padding: 8px 14px; border-top: 4px solid var(--border); flex-shrink: 0; }
@@ -392,7 +392,7 @@ export default function ScanPage() {
               consultaResult ? (
                 <div key={resultKey} className="sp-result scan-result consulta">
                   <p className="sp-result-type">Consulta · solo lectura</p>
-                  <p className="sp-result-name">{consultaResult.itemName}</p>
+                  <p className="sp-result-name ds-prod-name">{consultaResult.itemName}</p>
                   <div className="sp-result-grid">
                     <div className="sp-result-cell">
                       <p className="sp-result-cell-lbl">Stock actual</p>
@@ -420,7 +420,7 @@ export default function ScanPage() {
               lastResult ? (
                 <div key={resultKey} className={`sp-result scan-result ${resultClass}`}>
                   <p className="sp-result-type">Último escaneo · {lastResult.type}</p>
-                  <p className="sp-result-name">{lastResult.productName}</p>
+                  <p className="sp-result-name ds-prod-name">{lastResult.productName}</p>
                   <div className="sp-result-grid">
                     <div className="sp-result-cell">
                       <p className="sp-result-cell-lbl">Movimiento</p>
@@ -487,7 +487,7 @@ export default function ScanPage() {
             {sessionLog.slice(0, 5).map((entry, i) => (
               <div key={i} className="sp-mob-row">
                 <div style={{ minWidth: 0 }}>
-                  <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <p className="ds-prod-name" style={{ fontSize: 13, fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {entry.productName}
                   </p>
                   <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: entry.type === 'ENTRADA' ? '#4ae176' : '#ff6b6b', marginTop: 2 }}>
@@ -526,7 +526,7 @@ function LogPanel({ log, onClear }) {
           log.map((entry, i) => (
             <div key={i} className="sp-log-row">
               <div style={{ minWidth: 0, flex: 1 }}>
-                <p className="sp-log-name">{entry.productName}</p>
+                <p className="sp-log-name ds-prod-name">{entry.productName}</p>
                 <p className="sp-log-sub" style={{ color: entry.type === 'ENTRADA' ? '#4ae176' : '#ff6b6b' }}>
                   {entry.type} · {entry.currentStock}
                 </p>

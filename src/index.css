@@ -430,6 +430,14 @@ body {
 .ds-search::placeholder { color: var(--text-secondary); }
 .ds-search:focus { border-color: var(--accent); }
 
+/* ── Product name & description (theme-aware color) ─── */
+.ds-prod-name { }
+.ds-prod-desc { }
+[data-theme="dark"] .ds-prod-name { color: var(--accent); }
+[data-theme="light"] .ds-prod-name { color: #000000; }
+[data-theme="dark"] .ds-prod-desc { color: #ffffff; }
+[data-theme="light"] .ds-prod-desc { color: #374151; }
+
 /* ── Misc helpers ────────────────────────────────────── */
 .ds-mono { font-family: 'Courier New', monospace; font-size: 12px; color: var(--text-secondary); letter-spacing: 0.05em; }
 .ds-action {

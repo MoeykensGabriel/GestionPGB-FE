@@ -14,7 +14,7 @@ const CSS = `
     padding: 14px 16px;
   }
   .mp-card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
-  .mp-card-prod { font-size: 14px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.01em; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mp-card-prod { font-size: 14px; font-weight: 800; letter-spacing: -0.01em; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .mp-card-bottom { display: flex; align-items: center; gap: 12px; }
   .mp-card-qty { font-size: 22px; font-weight: 900; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
   .mp-card-sep { color: var(--text-secondary); font-weight: 700; }
@@ -209,10 +209,10 @@ export default function MovementsPage() {
                   {movements.map((m) => (
                     <tr key={m.id}>
                       <td>
-                        <p style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{m.productName}</p>
+                        <p className="ds-prod-name" style={{ fontWeight: 700 }}>{m.productName}</p>
                         <p className="ds-mono" style={{ fontSize: 12, marginTop: 2 }}>{m.productBarcode}</p>
                         {m.productDescription && (
-                          <p className="ds-mono" style={{ fontSize: 11, color: 'var(--text-tertiary)', marginTop: 2 }}>
+                          <p className="ds-prod-desc ds-mono" style={{ fontSize: 11, marginTop: 2 }}>
                             {m.productDescription}
                           </p>
                         )}
@@ -251,10 +251,10 @@ export default function MovementsPage() {
                 <div key={m.id} className="mp-card">
                   <div className="mp-card-top">
                     <div style={{ minWidth: 0, flex: 1 }}>
-                      <p className="mp-card-prod">{m.productName}</p>
+                      <p className="mp-card-prod ds-prod-name">{m.productName}</p>
                       <p className="ds-mono" style={{ fontSize: 12.5, marginTop: 3 }}>{m.productBarcode}</p>
                       {m.productDescription && (
-                        <p className="ds-mono" style={{ fontSize: 12.5, color: 'var(--text-secondary)', marginTop: 3, whiteSpace: 'normal', lineHeight: 1.4 }}>
+                        <p className="ds-prod-desc ds-mono" style={{ fontSize: 12.5, marginTop: 3, whiteSpace: 'normal', lineHeight: 1.4 }}>
                           {m.productDescription}
                         </p>
                       )}

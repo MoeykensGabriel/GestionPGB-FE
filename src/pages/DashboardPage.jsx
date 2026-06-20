@@ -17,7 +17,7 @@ const CSS = `
     gap: 12px;
   }
   .dp-inv-card:last-child { border-bottom: none; }
-  .dp-inv-name { font-size: 13px; font-weight: 700; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .dp-inv-name { font-size: 13px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .dp-inv-prov { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
 `
 
@@ -117,8 +117,8 @@ export default function DashboardPage() {
                       <tr key={p.id}>
                         <td><span className={`ds-dot ${cfg.dot}`} /></td>
                         <td>
-                          <p style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{p.itemName}</p>
-                          {p.description && <p className="ds-mono" style={{ marginTop: 2 }}>{p.description}</p>}
+                          <p className="ds-prod-name" style={{ fontWeight: 700 }}>{p.itemName}</p>
+                          {p.description && <p className="ds-prod-desc ds-mono" style={{ marginTop: 2 }}>{p.description}</p>}
                         </td>
                         <td><span style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>{p.providerName}</span></td>
                         <td className="right">
@@ -145,9 +145,9 @@ export default function DashboardPage() {
                       <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0, flex: 1 }}>
                         <span className={`ds-dot ${cfg.dot}`} style={{ flexShrink: 0 }} />
                         <div style={{ minWidth: 0 }}>
-                          <p className="dp-inv-name">{p.itemName}</p>
+                          <p className="dp-inv-name ds-prod-name">{p.itemName}</p>
                           {p.description && (
-                            <p className="ds-mono" style={{ fontSize: 12.5, color: 'var(--text-secondary)', marginTop: 3, whiteSpace: 'normal', lineHeight: 1.4 }}>
+                            <p className="ds-prod-desc ds-mono" style={{ fontSize: 12.5, marginTop: 3, whiteSpace: 'normal', lineHeight: 1.4 }}>
                               {p.description}
                             </p>
                           )}
@@ -188,11 +188,11 @@ export default function DashboardPage() {
                   }}
                 >
                   <div style={{ minWidth: 0, flex: 1 }}>
-                    <p style={{ fontSize: 13, fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <p className="ds-prod-name" style={{ fontSize: 13, fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {m.productName}
                     </p>
                     {m.productDescription && (
-                      <p className="ds-mono" style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2, whiteSpace: 'normal', lineHeight: 1.4 }}>
+                      <p className="ds-prod-desc ds-mono" style={{ fontSize: 12, marginTop: 2, whiteSpace: 'normal', lineHeight: 1.4 }}>
                         {m.productDescription}
                       </p>
                     )}

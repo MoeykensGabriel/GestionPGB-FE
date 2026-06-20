@@ -14,7 +14,7 @@ const CSS = `
     font-size: 12px;
   }
   .qm-item-info { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
-  .qm-item-name { font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .qm-item-name { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .qm-item-meta { font-size: 10px; color: var(--text-tertiary); font-weight: 600; letter-spacing: 0.05em; }
   .qm-item-qty { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
   .qm-item-qty-input { width: 50px; height: 32px; padding: 0 6px; background: var(--bg-primary); border: 2px solid var(--border); color: var(--text-primary); font-weight: 700; text-align: center; font-size: 12px; }
@@ -28,7 +28,7 @@ const CSS = `
     cursor: pointer; font-size: 12px; text-align: left; width: 100%;
   }
   .qm-result:hover { border-color: var(--accent); }
-  .qm-result-name { font-weight: 700; color: var(--text-primary); }
+  .qm-result-name { font-weight: 700; }
   .qm-result-meta { font-size: 10px; color: var(--text-tertiary); font-weight: 600; }
   .qm-result-add { font-size: 18px; color: var(--accent); line-height: 1; flex-shrink: 0; }
   .qm-empty { font-size: 11px; color: var(--text-secondary); padding: 10px 0; text-align: center; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
@@ -151,7 +151,7 @@ export function QuotationModal({ onClose }) {
                 {selected?.map(p => (
                   <div key={p.id} className="qm-item">
                     <div className="qm-item-info">
-                      <span className="qm-item-name">{p.itemName}</span>
+                      <span className="qm-item-name ds-prod-name">{p.itemName}</span>
                       <span className="qm-item-meta">{p.providerName} · Stock: {p.currentStock} / Min: {p.minRequiredStock}</span>
                     </div>
                     <div className="qm-item-qty">
@@ -189,7 +189,7 @@ export function QuotationModal({ onClose }) {
                 ) : searchResults.map(p => (
                   <button key={p.id} className="qm-result" onClick={() => add(p)}>
                     <div>
-                      <div className="qm-result-name">{p.itemName}</div>
+                      <div className="qm-result-name ds-prod-name">{p.itemName}</div>
                       <div className="qm-result-meta">{p.providerName} · Stock: {p.currentStock}</div>
                     </div>
                     <span className="qm-result-add">+</span>
