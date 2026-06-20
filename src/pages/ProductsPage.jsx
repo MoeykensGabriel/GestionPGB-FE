@@ -32,6 +32,35 @@ const CSS = `
   .pp-card-actions { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
   .pp-hint { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: var(--text-secondary); padding: 8px 0 0; text-transform: uppercase; }
 
+  /* ── Nombre y descripción con color por tema ── */
+  .pp-prod-name {
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  .pp-prod-desc {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+  .pp-card-desc {
+    font-family: 'Courier New', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.05em;
+    margin-top: 3px;
+    white-space: normal;
+    line-height: 1.4;
+  }
+  [data-theme="dark"] .pp-prod-name,
+  [data-theme="dark"] .pp-card-name { color: var(--accent); }
+  [data-theme="light"] .pp-prod-name,
+  [data-theme="light"] .pp-card-name { color: #000000; }
+  [data-theme="dark"] .pp-prod-desc,
+  [data-theme="dark"] .pp-card-desc { color: #ffffff; }
+  [data-theme="light"] .pp-prod-desc,
+  [data-theme="light"] .pp-card-desc { color: #374151; }
+
   /* Fila de filtros: búsqueda + selector de proveedor */
   .pp-filters { display: flex; gap: 10px; align-items: center; }
   .pp-provider-select { max-width: 220px; flex-shrink: 0; cursor: pointer; }
@@ -260,8 +289,8 @@ export default function ProductsPage() {
                         <td><span className={`ds-dot ${cfg.dot}`} /></td>
                         <td><span className="ds-mono" style={{ fontSize: 14, fontWeight: 600 }}>{p.barcode}</span></td>
                         <td>
-                          <p style={{ fontWeight: 700, fontSize: 15 }}>{p.itemName}</p>
-                          {p.description && <p className="ds-mono" style={{ marginTop: 2 }}>{p.description}</p>}
+                          <p className="pp-prod-name">{p.itemName}</p>
+                          {p.description && <p className="pp-prod-desc">{p.description}</p>}
                         </td>
                         <td><span style={{ fontSize: 12 }}>{p.providerName}</span></td>
                         <td className="right">
@@ -302,7 +331,7 @@ export default function ProductsPage() {
                         <p className="pp-card-name">{p.itemName}</p>
                         <p className="pp-card-barcode">{p.barcode}</p>
                         {p.description && (
-                          <p className="ds-mono" style={{ fontSize: 12.5, color: 'var(--text-secondary)', marginTop: 3, whiteSpace: 'normal', lineHeight: 1.4 }}>
+                          <p className="pp-card-desc">
                             {p.description}
                           </p>
                         )}

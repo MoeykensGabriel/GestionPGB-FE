@@ -2,11 +2,13 @@ import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../hooks/useTheme'
 import { useSignalR } from '../hooks/useSignalR'
 import { QK } from '../utils/queryKeys'
 import {
   IconHome, IconBox, IconArrows, IconScan,
   IconUsers, IconLogout, IconShield, IconX, IconWrench,
+  IconSun, IconMoon,
 } from './Icons'
 
 const CSS = `
@@ -159,6 +161,8 @@ const CSS = `
   }
   .ly-mob-logout:hover { color: var(--accent); }
 
+  .ly-mob-actions { display: flex; align-items: center; gap: 4px; }
+
   /* ── Main ── */
   .ly-main { flex: 1; padding: 20px; padding-bottom: 84px; }
 
@@ -283,6 +287,7 @@ const adminPanelItems = [
 
 export default function Layout({ children }) {
   const { user, logout } = useAuth()
+  const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [adminPanelOpen, setAdminPanelOpen] = useState(false)
@@ -352,6 +357,12 @@ export default function Layout({ children }) {
               <p className="ly-user-name">{user?.unique_name}</p>
               <p className="ly-user-role">{isAdmin ? 'Administrador' : 'Operario'}</p>
             </div>
+            <button onClick={toggleTheme} className="ly-nav-item" title={`Cambiar a modo ${theme === 'dark' ? 'claro' : 'oscuro'}`}>
+              {theme === 'dark'
+                ? <IconSun style={{ width: 14, height: 14, flexShrink: 0 }} />
+                : <IconMoon style={{ width: 14, height: 14, flexShrink: 0 }} />}
+              {theme === 'dark' ? 'Modo claro' : 'Modo oscuro'}
+            </button>
             <button onClick={handleLogout} className="ly-nav-item">
               <IconLogout style={{ width: 14, height: 14 }} />
               Cerrar sesión
@@ -368,9 +379,16 @@ export default function Layout({ children }) {
               <p className="ly-mob-brand">Gestión<span>PGB</span></p>
               <p className="ly-mob-sub">{isAdmin ? 'Admin' : 'Operario'} · {user?.unique_name}</p>
             </div>
-            <button onClick={handleLogout} className="ly-mob-logout" aria-label="Cerrar sesión">
-              <IconLogout style={{ width: 20, height: 20 }} />
-            </button>
+            <div className="ly-mob-actions">
+              <button onClick={toggleTheme} className="ly-mob-logout" aria-label={`Cambiar a modo ${theme === 'dark' ? 'claro' : 'oscuro'}`}>
+                {theme === 'dark'
+                  ? <IconSun style={{ width: 20, height: 20 }} />
+                  : <IconMoon style={{ width: 20, height: 20 }} />}
+              </button>
+              <button onClick={handleLogout} className="ly-mob-logout" aria-label="Cerrar sesión">
+                <IconLogout style={{ width: 20, height: 20 }} />
+              </button>
+            </div>
           </header>
 
           <main className="ly-main">

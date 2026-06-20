@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query'
 import { getProducts, getLowStockProducts } from '../api/products'
 import { QuotationModal } from '../components/QuotationModal'
 import { getMovements } from '../api/movements'
-import { useTheme } from '../hooks/useTheme'
 import { stockStatus, STOCK_STATUS } from '../utils/stockStatus'
 import { movementBadge, formatQty } from '../utils/movements'
 import { QK } from '../utils/queryKeys'
@@ -25,8 +24,6 @@ const CSS = `
 const DP_MOVEMENTS_KEY = [...QK.movements, { pageSize: 8 }]
 
 export default function DashboardPage() {
-  const { theme, toggleTheme } = useTheme()
-
   const todayStart = useMemo(() => {
     const d = new Date()
     d.setHours(0, 0, 0, 0)
@@ -71,22 +68,12 @@ export default function DashboardPage() {
         {/* Header */}
         <div className="ds-page-hd">
           <h2 className="ds-page-title">Dashboard</h2>
-          <div style={{ display: 'flex', gap: 8 }}>
-            <button
-              onClick={toggleTheme}
-              className="ds-btn-ghost"
-              style={{ height: 44, padding: '0 14px', fontSize: 11 }}
-              title={`Cambiar a modo ${theme === 'dark' ? 'claro' : 'oscuro'}`}
-            >
-              {theme === 'dark' ? 'claro' : 'oscuro'}
-            </button>
-            <button onClick={() => setShowQuotation(true)} className="ds-btn">
-              <svg style={{ width: 13, height: 13 }} fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-              </svg>
-              PDF Cotización
-            </button>
-          </div>
+          <button onClick={() => setShowQuotation(true)} className="ds-btn">
+            <svg style={{ width: 13, height: 13 }} fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            PDF Cotización
+          </button>
         </div>
 
         {/* Stats */}
