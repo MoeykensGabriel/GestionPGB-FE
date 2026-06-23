@@ -382,7 +382,7 @@ export default function LoginPage() {
 
         {/* ── TopBar ── */}
         <header className="lp-topbar">
-          <h1 className="lp-brand">Gestión<span>PGB</span></h1>
+          <h1 className="lp-brand">GB<span>-Service</span></h1>
         </header>
 
         {/* ── Main ── */}

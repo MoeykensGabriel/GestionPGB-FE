@@ -78,7 +78,7 @@ export function InstallApp({ className = 'ds-btn-ghost', style, label = 'Instala
       {showIos && (
         <ModalBackdrop onClose={() => setShowIos(false)}>
           <div className="ds-modal-hd">
-            <p className="ds-modal-title">Instalar GestiónPGB</p>
+            <p className="ds-modal-title">Instalar GB-Service</p>
             <button onClick={() => setShowIos(false)} className="ds-btn-icon" aria-label="Cerrar">
               <IconX className="w-4 h-4" />
             </button>

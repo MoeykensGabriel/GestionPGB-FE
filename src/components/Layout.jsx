@@ -319,7 +319,7 @@ export default function Layout({ children }) {
         {/* ── Sidebar desktop ── */}
         <aside className="ly-sidebar">
           <div className="ly-brand-area">
-            <h1 className="ly-brand">Gestión<span>PGB</span></h1>
+            <h1 className="ly-brand">GB<span>-Service</span></h1>
             <p className="ly-brand-sub">Control de Stock</p>
           </div>
 
@@ -378,7 +378,7 @@ export default function Layout({ children }) {
           {/* Mobile header */}
           <header className="ly-mob-header">
             <div>
-              <p className="ly-mob-brand">Gestión<span>PGB</span></p>
+              <p className="ly-mob-brand">GB<span>-Service</span></p>
               <p className="ly-mob-sub">{isAdmin ? 'Admin' : 'Operario'} · {user?.unique_name}</p>
             </div>
             <div className="ly-mob-actions">
