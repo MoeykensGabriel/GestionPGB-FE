@@ -10,6 +10,7 @@ import {
   IconUsers, IconLogout, IconShield, IconX, IconWrench,
   IconSun, IconMoon,
 } from './Icons'
+import { InstallApp } from './InstallApp'
 
 const CSS = `
   .ly-wrap { display: flex; align-items: flex-start; }
@@ -357,6 +358,7 @@ export default function Layout({ children }) {
               <p className="ly-user-name">{user?.unique_name}</p>
               <p className="ly-user-role">{isAdmin ? 'Administrador' : 'Operario'}</p>
             </div>
+            <InstallApp className="ly-nav-item" />
             <button onClick={toggleTheme} className="ly-nav-item" title={`Cambiar a modo ${theme === 'dark' ? 'claro' : 'oscuro'}`}>
               {theme === 'dark'
                 ? <IconSun style={{ width: 14, height: 14, flexShrink: 0 }} />
@@ -380,6 +382,7 @@ export default function Layout({ children }) {
               <p className="ly-mob-sub">{isAdmin ? 'Admin' : 'Operario'} · {user?.unique_name}</p>
             </div>
             <div className="ly-mob-actions">
+              <InstallApp className="ly-mob-logout" label="" iconSize={20} />
               <button onClick={toggleTheme} className="ly-mob-logout" aria-label={`Cambiar a modo ${theme === 'dark' ? 'claro' : 'oscuro'}`}>
                 {theme === 'dark'
                   ? <IconSun style={{ width: 20, height: 20 }} />
