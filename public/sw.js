@@ -1,7 +1,7 @@
 // Service worker minimo para que la PWA sea instalable (Android/Chrome lo exige).
 // Estrategia network-first: siempre intenta la red (app siempre fresca), y solo
 // usa el cache como respaldo si no hay conexion. No cachea la API (otro origen).
-const CACHE = 'gpgb-v1'
+const CACHE = 'gpgb-v2'
 
 self.addEventListener('install', () => self.skipWaiting())
 
